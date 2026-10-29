@@ -1,0 +1,302 @@
+/* Estilos propios de la renovación (se carga después de main.css). */
+
+:root {
+  /* Curva para los hovers: arranca rápido y frena suave. */
+  --suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Inicio · "Quiero sumarme": 4 tarjetas con ícono, texto y botón dentro. */
+.sumarme {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.sumarme__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: #202d3bd9;
+  border: 1px solid #1a9de2;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.sumarme__icon {
+  width: 72px;
+  height: 72px;
+  color: #6abfec;
+}
+
+.sumarme__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sumarme__text {
+  flex-grow: 1;
+}
+
+/* Hover de las tarjetas. La regla de entrada de main.css (transition--slide)
+   pisa la transición de hover--lift y el hover saltaba sin animar, así que
+   aquí se declaran juntas: la entrada conserva su retraso y el hover no. */
+.sumarme .sumarme__card.sumarme__card.transition.transition--slide {
+  transition:
+    opacity 0.65s ease var(--user-animation-delay, 0.1s),
+    transform 0.65s ease var(--user-animation-delay, 0.1s),
+    translate 0.5s var(--suave),
+    box-shadow 0.5s var(--suave),
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.sumarme__icon {
+  transition: scale 0.5s var(--suave), rotate 0.5s var(--suave), filter 0.35s ease;
+}
+
+.sumarme__icon rect {
+  transition: fill 0.35s ease;
+}
+
+@media (hover: hover) {
+  .sumarme .sumarme__card:hover,
+  .sumarme .sumarme__card:focus-within {
+    translate: 0 -8px;
+    background-color: #24384cf0;
+    border-color: #6abfec;
+    box-shadow:
+      0 22px 40px -18px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(106, 191, 236, 0.35),
+      0 0 28px -6px rgba(26, 157, 226, 0.45);
+  }
+
+  .sumarme__card:hover .sumarme__icon,
+  .sumarme__card:focus-within .sumarme__icon {
+    scale: 1.1;
+    rotate: -6deg;
+    filter: drop-shadow(0 6px 12px rgba(26, 157, 226, 0.45));
+  }
+
+  .sumarme__card:hover .sumarme__icon rect,
+  .sumarme__card:focus-within .sumarme__icon rect {
+    fill: #134a70;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sumarme .sumarme__card.sumarme__card.transition.transition--slide,
+  .sumarme__icon {
+    transition: none;
+  }
+
+  .sumarme .sumarme__card:hover,
+  .sumarme .sumarme__card:focus-within,
+  .sumarme__card:hover .sumarme__icon,
+  .sumarme__card:focus-within .sumarme__icon {
+    translate: none;
+    scale: none;
+    rotate: none;
+  }
+}
+
+/* El botón queda siempre al fondo de la tarjeta y ocupa todo su ancho;
+   si el texto no cabe en una línea, se parte en vez de cortarse. */
+.sumarme__card .grid-button {
+  justify-content: center;
+  width: 100%;
+  white-space: normal;
+}
+
+@media screen and (max-width: 1100px) and (min-width: 921px) {
+  .sumarme {
+    gap: 16px;
+  }
+
+  .sumarme__card {
+    padding: 20px 16px;
+  }
+
+  .sumarme__icon {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .sumarme {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .sumarme__card {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Inicio · "Nuestra Identidad": tarjeta con logo y textos + foto al lado. */
+.identidad {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+
+.identidad__card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 40px;
+  background: #ffffff;
+  border: 1px solid #97d2f1;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+.identidad__logo {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.identidad__divider {
+  width: 100%;
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid #dfe6ee;
+}
+
+.identidad__valor {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.identidad__icon {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  color: #99035c;
+  transition: scale 0.5s var(--suave), rotate 0.5s var(--suave), filter 0.35s ease;
+}
+
+.identidad__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.identidad__icon rect {
+  transition: fill 0.35s ease;
+}
+
+.identidad__foto {
+  margin: 0;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.identidad__foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: scale 0.8s var(--suave);
+}
+
+/* Igual que en "Quiero sumarme": se declaran juntas la entrada (con su retraso)
+   y el hover (inmediato), porque la regla de entrada de main.css pisa la del hover. */
+.identidad .identidad__card.identidad__card.transition.transition--slide,
+.identidad .identidad__foto.identidad__foto.transition.transition--scale {
+  transition:
+    opacity 0.65s ease var(--user-animation-delay, 0.1s),
+    transform 0.65s ease var(--user-animation-delay, 0.1s),
+    translate 0.5s var(--suave),
+    box-shadow 0.5s var(--suave),
+    border-color 0.35s ease;
+}
+
+@media (hover: hover) {
+  .identidad .identidad__card:hover,
+  .identidad .identidad__card:focus-within {
+    translate: 0 -8px;
+    border-color: #1a9de2;
+    box-shadow:
+      0 22px 40px -18px rgba(13, 27, 43, 0.35),
+      0 0 0 1px rgba(26, 157, 226, 0.25),
+      0 0 28px -6px rgba(26, 157, 226, 0.35);
+  }
+
+  .identidad__card:hover .identidad__icon,
+  .identidad__card:focus-within .identidad__icon {
+    scale: 1.1;
+    rotate: -6deg;
+    filter: drop-shadow(0 6px 12px rgba(153, 3, 92, 0.3));
+  }
+
+  .identidad__card:hover .identidad__icon rect,
+  .identidad__card:focus-within .identidad__icon rect {
+    fill: #f8b9dd;
+  }
+
+  .identidad .identidad__foto:hover {
+    translate: 0 -8px;
+    box-shadow: 0 22px 40px -18px rgba(13, 27, 43, 0.45);
+  }
+
+  .identidad__foto:hover img {
+    scale: 1.06;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .identidad {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .identidad__card {
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .identidad__valor {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .identidad__foto {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .identidad .identidad__card.identidad__card.transition.transition--slide,
+  .identidad .identidad__foto.identidad__foto.transition.transition--scale,
+  .identidad__icon,
+  .identidad__foto img {
+    transition: none;
+  }
+
+  .identidad .identidad__card:hover,
+  .identidad .identidad__card:focus-within,
+  .identidad .identidad__foto:hover,
+  .identidad__card:hover .identidad__icon,
+  .identidad__card:focus-within .identidad__icon,
+  .identidad__foto:hover img {
+    translate: none;
+    scale: none;
+    rotate: none;
+  }
+}
