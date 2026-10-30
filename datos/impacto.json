@@ -1,0 +1,39 @@
+{
+  "_instrucciones": "Contenido de la sección 'Nuestro impacto' del inicio. Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "titulo": "Las comunidades, protagonistas de su desarrollo",
+  "cita": "Creemos en un desarrollo social que no se limita a brindar apoyo, sino que fortalece capacidades, impulsa la autonomía y reconoce a las comunidades como protagonistas de su propio desarrollo.",
+  "cifras": [
+    {
+      "numero": 100,
+      "prefijo": "+",
+      "texto": "impactos positivos",
+      "icono": "estrella"
+    },
+    {
+      "numero": 150,
+      "prefijo": "+",
+      "texto": "participantes en nuestros programas",
+      "icono": "personas"
+    }
+  ],
+  "areas": [
+    {
+      "titulo": "Comunidades alcanzadas",
+      "numero": null,
+      "imagen": "img/impacto/01-comunidades-alcanzadas.jpg",
+      "descripcion": "Integrante de CAPDES comparte con niñas, niños y vecinas durante una jornada al aire libre, junto a una lona de la asociación."
+    },
+    {
+      "titulo": "Personas beneficiadas",
+      "numero": null,
+      "imagen": "img/impacto/02-personas-beneficiadas.jpg",
+      "descripcion": "Participantes de un taller posan detrás de una mesa con una charola de germinación de semillas."
+    },
+    {
+      "titulo": "Mujeres capacitadas",
+      "numero": null,
+      "imagen": "img/impacto/03-mujeres-capacitadas.jpg",
+      "descripcion": "Mujeres de la comunidad posan junto a integrantes de CAPDES frente a una lona de la asociación."
+    }
+  ]
+}

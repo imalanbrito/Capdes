@@ -5,7 +5,6 @@
   var selector =
     '.transition:not(.transition--root-hidden),' +
     '.transition--root-hidden [data-animation-role]';
-  var elementos = document.querySelectorAll(selector);
 
   function activar(el) {
     if (el.getAttribute('data-animation-role') === 'image') {
@@ -20,19 +19,29 @@
     el.setAttribute('data-animation-state', 'active');
   }
 
-  if (!('IntersectionObserver' in window)) {
-    elementos.forEach(activar);
-    return;
+  var observador = 'IntersectionObserver' in window
+    ? new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (entrada) {
+        if (entrada.isIntersecting) {
+          activar(entrada.target);
+          observador.unobserve(entrada.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -5% 0px' })
+    : null;
+
+  // Observa los elementos animados dentro de las raíces dadas. Otros scripts la
+  // usan cuando agregan contenido después de cargar la página (p. ej. js/inicio.js).
+  function animar(raices) {
+    Array.prototype.forEach.call(raices, function (raiz) {
+      raiz.querySelectorAll(selector).forEach(function (el) {
+        if (el.getAttribute('data-animation-state') === 'active') return;
+        if (observador) observador.observe(el);
+        else activar(el);
+      });
+    });
   }
 
-  var observador = new IntersectionObserver(function (entradas) {
-    entradas.forEach(function (entrada) {
-      if (entrada.isIntersecting) {
-        activar(entrada.target);
-        observador.unobserve(entrada.target);
-      }
-    });
-  }, { rootMargin: '0px 0px -5% 0px' });
-
-  elementos.forEach(function (el) { observador.observe(el); });
+  window.capdesAnimar = animar;
+  animar([document]);
 })();

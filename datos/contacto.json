@@ -1,0 +1,11 @@
+{
+  "_instrucciones": "Datos de contacto y redes del pie de página (todas las páginas) y de los íconos de redes del menú. Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "nombre_completo": "Centro de Actividades y Apoyos para el Desarrollo y Bienestar Social, A.C.",
+  "telefono": "+52 221 579 2406",
+  "whatsapp": "",
+  "correo": "contacto@capdes.org",
+  "redes": [
+    { "red": "facebook", "enlace": "https://www.facebook.com/capdes.ac" },
+    { "red": "instagram", "enlace": "https://www.instagram.com/capdes.ac" }
+  ]
+}

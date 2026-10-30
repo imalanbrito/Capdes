@@ -1,0 +1,12 @@
+{
+  "_instrucciones": "Logos de 'Nuestros aliados' del inicio. Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "titulo": "Nuestros aliados",
+  "aliados": [
+    { "nombre": "UPAEP", "logo": "img/aliados/01-upaep.png", "enlace": "" },
+    { "nombre": "Fundación Codapo", "logo": "img/aliados/02-fundacion-codapo.png", "enlace": "" },
+    { "nombre": "ANFOCIR", "logo": "img/aliados/03-anfocir.png", "enlace": "" },
+    { "nombre": "Recaudacción de Krispy Kreme", "logo": "img/aliados/04-recaudaccion-krispy-kreme.png", "enlace": "" },
+    { "nombre": "AP & G, Asuntos Públicos y de Gobierno", "logo": "img/aliados/05-apyg.png", "enlace": "" },
+    { "nombre": "CIESAC, Posgrados en línea", "logo": "img/aliados/06-ciesac.png", "enlace": "" }
+  ]
+}

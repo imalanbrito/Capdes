@@ -1,0 +1,36 @@
+{
+  "_instrucciones": "Fotos del carrusel de jornadas (página de inicio). Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "fuente": "archivo",
+  "drive": {
+    "carpeta_id": "",
+    "api_key": ""
+  },
+  "jornadas": [
+    {
+      "imagen": "img/jornadas/01-banner-jornadas-comunitarias.jpg",
+      "titulo": "",
+      "descripcion": "Jornadas Comunitarias de Servicios de CAPDES, A.C.: collage de participantes e integrantes de la asociación durante las jornadas.",
+      "llenar_marco": true
+    },
+    {
+      "imagen": "img/jornadas/02-jornada-ninas-ninos-familias.jpg",
+      "titulo": "Jornada comunitaria con niñas, niños y sus familias",
+      "descripcion": "Niñas y niños juegan con globos junto a sus familias durante una jornada comunitaria al aire libre."
+    },
+    {
+      "imagen": "img/jornadas/03-circulo-de-dialogo.jpg",
+      "titulo": "Círculo de diálogo con la comunidad",
+      "descripcion": "Personas de la comunidad sentadas en círculo conversan con un facilitador de CAPDES, junto a una lona de la asociación."
+    },
+    {
+      "imagen": "img/jornadas/04-taller-germinacion-huertos.jpg",
+      "titulo": "Taller de germinación y huertos familiares",
+      "descripcion": "Participantes de un taller posan detrás de una mesa con una charola de germinación de semillas."
+    },
+    {
+      "imagen": "img/jornadas/05-encuentro-mujeres.jpg",
+      "titulo": "Encuentro con mujeres de la comunidad",
+      "descripcion": "Mujeres de la comunidad posan junto a integrantes de CAPDES frente a una lona de la asociación."
+    }
+  ]
+}

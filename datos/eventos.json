@@ -1,0 +1,32 @@
+{
+  "_instrucciones": "Eventos de la sección 'Eventos y actividades comunitarias' del inicio. Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "eventos": [
+    {
+      "dia": 4,
+      "mes": "septiembre",
+      "tipo": "Jornada comunitaria",
+      "titulo": "Jornada de Soberanía Alimentaria",
+      "lugar": "Guadalupe Hidalgo, Puebla",
+      "imagen": "img/eventos/01-jornada-soberania-alimentaria.jpg",
+      "descripcion": "Niñas y niños juegan con globos junto a sus familias durante una jornada comunitaria al aire libre."
+    },
+    {
+      "dia": 18,
+      "mes": "septiembre",
+      "tipo": "Jornada comunitaria",
+      "titulo": "Servicios comunitarios",
+      "lugar": "Centro Comunitario CAPDES",
+      "imagen": "img/eventos/02-servicios-comunitarios.jpg",
+      "descripcion": "Personas de la comunidad sentadas en círculo conversan con un facilitador de CAPDES, junto a una lona de la asociación."
+    },
+    {
+      "dia": 2,
+      "mes": "octubre",
+      "tipo": "Jornada comunitaria",
+      "titulo": "Igualdad Social",
+      "lugar": "Plaza Pública, Puebla",
+      "imagen": "img/eventos/03-igualdad-social.jpg",
+      "descripcion": "Mujeres de la comunidad reunidas en una casa, junto a bolsas con apoyos y una lona de CAPDES."
+    }
+  ]
+}

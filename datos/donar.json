@@ -1,0 +1,21 @@
+{
+  "_instrucciones": "Sección de donativos del inicio (los botones 'Donar' del sitio llevan aquí). Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "titulo": "¡Tu apoyo hoy cambia vidas!",
+  "texto": "Elige la plataforma que prefieras. Cada aportación impulsa nuestras jornadas, talleres y programas en las comunidades.",
+  "opciones": [
+    {
+      "plataforma": "paypal",
+      "titulo": "Dona con PayPal",
+      "texto": "Aporta con tarjeta de crédito o débito, o con tu cuenta de PayPal.",
+      "boton": "Donar con PayPal",
+      "enlace": "https://www.paypal.com/ncp/payment/9XRBAT36GXUAW"
+    },
+    {
+      "plataforma": "gofundme",
+      "titulo": "Apoya nuestra campaña en GoFundMe",
+      "texto": "Súmate a la campaña y compártela con tu red para llegar a más personas.",
+      "boton": "Ir a GoFundMe",
+      "enlace": "https://gofund.me/73c07af98"
+    }
+  ]
+}
