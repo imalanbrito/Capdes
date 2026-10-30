@@ -43,16 +43,14 @@
   var vacio = document.querySelector('[data-galeria-vacio]');
   if (!listaGaleria) return;
 
-  function itemGaleria(j, nombres) {
+  function itemGaleria(j) {
     var detalle = [j.lugar, j.fecha ? fechaLarga(j.fecha) : ''].filter(Boolean).join(' · ');
-    var programa = nombres[j.programa] || '';
     return '<li class="galeria__item" data-programa="' + escapar(j.programa) + '">' +
       '<button type="button" class="galeria__boton" data-galeria-abrir ' +
-      'data-programa-nombre="' + escapar(programa) + '" data-titulo="' + escapar(j.titulo) + '" ' +
+      'data-titulo="' + escapar(j.titulo) + '" ' +
       'data-detalle="' + escapar(detalle) + '">' +
       '<img src="' + escapar(j.imagen) + '" alt="' + escapar(j.descripcion || j.titulo) + '" loading="lazy">' +
-      '<span class="galeria__info"><span class="galeria__programa">' + escapar(programa) + '</span>' +
-      '<span class="galeria__titulo">' + escapar(j.titulo) + '</span></span>' +
+      '<span class="galeria__info"><span class="galeria__titulo">' + escapar(j.titulo) + '</span></span>' +
       '</button></li>';
   }
 
@@ -91,7 +89,7 @@
       datos.jornadas.forEach(function (j) { if (j.programa in conteo) conteo[j.programa]++; });
 
       listaGaleria.innerHTML = datos.jornadas.filter(function (j) { return j.programa in nombres; })
-        .map(function (j) { return itemGaleria(j, nombres); }).join('');
+        .map(function (j) { return itemGaleria(j); }).join('');
 
       if (filtrosGaleria) {
         filtrosGaleria.innerHTML =
@@ -124,7 +122,6 @@
   if (!visor || typeof visor.showModal !== 'function') return;
 
   var imagen = visor.querySelector('[data-visor-img]');
-  var textoPrograma = visor.querySelector('[data-visor-programa]');
   var textoTitulo = visor.querySelector('[data-visor-titulo]');
   var textoDetalle = visor.querySelector('[data-visor-detalle]');
   var contador = visor.querySelector('[data-visor-contador]');
@@ -138,7 +135,6 @@
     var miniatura = boton.querySelector('img');
     imagen.src = miniatura.src;
     imagen.alt = miniatura.alt;
-    textoPrograma.textContent = boton.getAttribute('data-programa-nombre');
     textoTitulo.textContent = boton.getAttribute('data-titulo');
     textoDetalle.textContent = boton.getAttribute('data-detalle');
     contador.textContent = (actual + 1) + ' de ' + fotos.length;

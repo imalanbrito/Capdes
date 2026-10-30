@@ -384,8 +384,22 @@
 }
 
 @media screen and (max-width: 920px) {
+  /* La cuadrícula de Hostinger de esta sección tiene alturas fijas que dejaban
+     huecos grandes; aquí solo hay tarjeta y foto, así que se apilan. */
+  #zyAJFT > .block-layout {
+    display: block;
+    max-width: none;
+    padding: 48px 16px;
+  }
+
+  #zyAJFT > .block-layout > .layout-element {
+    width: 100%;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
   .identidad {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
 
@@ -399,8 +413,12 @@
     gap: 12px;
   }
 
+  /* Ancho fijo y alto según la proporción: si el alto lo diera la cuadrícula,
+     el recuadro se ensancharía más que la pantalla del celular. */
   .identidad__foto {
+    width: 100%;
     min-height: 0;
+    align-self: start;
     aspect-ratio: 4 / 3;
   }
 }
@@ -740,14 +758,17 @@ html {
 }
 
 /* Las redes de la barra y la hamburguesa se abren o cierran a lo ancho para
-   que el botón Donar se deslice a su lugar en vez de brincar. */
+   que el botón Donar se deslice a su lugar en vez de brincar. El padding (compensado
+   con margen negativo) deja lugar para que el hover y el contorno de foco no se recorten. */
 .menu__acciones .menu__redes {
-  max-width: 80px;
-  margin-left: 16px;
+  max-width: 92px;
+  margin: -6px -6px -6px 10px;
+  padding: 6px;
   overflow: hidden;
   transition:
     max-width var(--menu-duracion) var(--suave),
     margin var(--menu-duracion) var(--suave),
+    padding var(--menu-duracion) var(--suave),
     opacity 0.3s ease;
 }
 
@@ -829,7 +850,8 @@ html {
 
 .menu--compacto .menu__acciones .menu__redes {
   max-width: 0;
-  margin-left: 0;
+  margin: 0;
+  padding: 0;
   opacity: 0;
 }
 
@@ -1552,34 +1574,13 @@ html {
   position: relative;
   max-width: 900px;
   margin: 0 auto;
-  padding: 48px 56px 40px;
+  padding: 40px 56px;
   text-align: center;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 28px;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
-}
-
-.impacto__cita::before {
-  content: "“";
-  position: absolute;
-  top: -46px;
-  left: 50%;
-  display: grid;
-  place-items: center;
-  box-sizing: border-box;
-  width: 76px;
-  height: 76px;
-  padding-top: 30px;
-  font-family: Outfit, Georgia, serif;
-  font-size: 96px;
-  line-height: 1;
-  color: #ffffff;
-  background: var(--menu-rosa);
-  border-radius: 50%;
-  box-shadow: 0 14px 30px -12px rgba(236, 5, 141, 0.8);
-  translate: -50% 0;
 }
 
 .impacto__cita blockquote {
@@ -1593,6 +1594,15 @@ html {
   font-weight: 500;
   line-height: 1.5;
   color: #ffffff;
+}
+
+/* Las comillas van en el estilo, no en el texto: en datos/impacto.json la cita se escribe sin ellas. */
+.impacto__cita p::before {
+  content: "“";
+}
+
+.impacto__cita p::after {
+  content: "”";
 }
 
 .impacto__cita figcaption {
@@ -1793,7 +1803,7 @@ html {
   }
 
   .impacto__cita {
-    padding: 44px 24px 32px;
+    padding: 32px 24px;
   }
 
   .impacto__cifras,
@@ -2825,41 +2835,6 @@ html {
   color: var(--menu-texto);
 }
 
-.blog__filtros {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.blog__filtro {
-  padding: 10px 20px;
-  font: 600 15px Poppins, system-ui, sans-serif;
-  color: var(--menu-texto);
-  background: #ffffff;
-  border: 1px solid #dcd8ef;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.blog__filtro:hover {
-  border-color: var(--menu-rosa);
-  color: var(--menu-rosa);
-}
-
-.blog__filtro[aria-pressed="true"] {
-  color: #ffffff;
-  background: var(--menu-texto);
-  border-color: var(--menu-texto);
-}
-
-.blog__filtro:focus-visible {
-  outline: 3px solid #1a9de2;
-  outline-offset: 2px;
-}
-
 .blog__lista {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2922,17 +2897,6 @@ html {
   font-family: Poppins, system-ui, sans-serif;
   font-size: 13px;
   color: #6b6f88;
-}
-
-.blog__categoria {
-  padding: 4px 11px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--menu-rosa-oscuro);
-  background: #fde6f2;
-  border-radius: 999px;
 }
 
 .blog__nombre {
@@ -3027,13 +2991,6 @@ html {
   flex: none;
   font-size: 16px;
   -webkit-line-clamp: 4;
-}
-
-.blog__vacio {
-  margin: 24px 0 0;
-  font-family: Poppins, system-ui, sans-serif;
-  text-align: center;
-  color: #5b5f78;
 }
 
 /* Agenda de eventos dentro del blog: misma tarjeta que en el inicio, sin foto de fondo. */
@@ -3168,20 +3125,6 @@ html {
 
 .entrada__migas a:hover {
   color: var(--menu-rosa);
-}
-
-.entrada__categoria {
-  display: inline-block;
-  margin: 0 0 14px;
-  padding: 5px 12px;
-  font-family: Poppins, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--menu-rosa-oscuro);
-  background: #fde6f2;
-  border-radius: 999px;
 }
 
 .entrada__titulo {
@@ -3572,25 +3515,6 @@ html {
   transition: scale 0.8s var(--suave);
 }
 
-.programa__icono {
-  position: absolute;
-  bottom: -26px;
-  left: 24px;
-  display: grid;
-  place-items: center;
-  width: 56px;
-  height: 56px;
-  color: #ffffff;
-  background: var(--menu-rosa);
-  border: 4px solid #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 12px 24px -12px rgba(236, 5, 141, 0.8);
-}
-
-.programa__foto {
-  overflow: visible;
-}
-
 .programa__foto img {
   border-radius: 24px 24px 0 0;
 }
@@ -3600,17 +3524,7 @@ html {
   flex: 1;
   flex-direction: column;
   gap: 10px;
-  padding: 40px 26px 26px;
-}
-
-.programa__tipo {
-  margin: 0;
-  font-family: Poppins, system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #6b6f88;
+  padding: 26px;
 }
 
 .programa__nombre {
@@ -3759,13 +3673,6 @@ html {
   text-align: left;
 }
 
-.galeria__programa {
-  font: 700 11px Poppins, system-ui, sans-serif;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #ff8fcc;
-}
-
 .galeria__titulo {
   font: 600 16px/1.3 Poppins, system-ui, sans-serif;
   color: #ffffff;
@@ -3822,14 +3729,6 @@ html {
   gap: 4px;
   padding: 16px 4px 0;
   font-family: Poppins, system-ui, sans-serif;
-}
-
-.visor__programa {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #ff8fcc;
 }
 
 .visor__titulo {
@@ -3997,10 +3896,6 @@ html {
 
   .galeria__titulo {
     font-size: 13px;
-  }
-
-  .galeria__programa {
-    display: none;
   }
 
   .ods__lista {
@@ -5105,30 +5000,10 @@ html {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
 }
 
-.principio__icono,
 .valor__icono {
   display: inline-grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
   color: #2d3a88;
-  background: #e8eaf6;
-  border-radius: 12px;
-}
-
-.valor__icono {
-  width: auto;
-  height: auto;
-  background: none;
-}
-
-.principio__etiqueta {
-  margin: 16px 0 6px;
-  font-family: Poppins, system-ui, sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #1a1a1a;
 }
 
 .principio__titulo {

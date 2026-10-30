@@ -205,19 +205,6 @@ const ICONO_SALIR = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden
     . 'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'
     . '<path d="M7 17 17 7M8 7h9v9"/></svg>';
 
-// Íconos disponibles para los programas (campo "icono" en datos/programas.json).
-const ICONOS_PROGRAMA = [
-    'salud' => '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23'
-        . 'l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/><path d="M3.5 12h4l1.5-3 3 6 1.5-3h4"/>',
-    'educacion' => '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/>'
-        . '<path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
-    'brote' => '<path d="M7 20h10"/><path d="M12 20v-8"/><path d="M12 12C12 8 9 5 4 5c0 4 3 7 8 7z"/>'
-        . '<path d="M12 12c0-3 2-6 7-6 0 4-3 6-7 6z"/>',
-    'personas' => ICONOS_IMPACTO['personas'],
-    'apoyo' => '<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/>',
-    'corazon' => ICONOS_IMPACTO['corazon'],
-];
-
 const ICONO_CERRAR = '<svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
     . 'stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
 const ICONO_ANTERIOR = '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
@@ -477,6 +464,9 @@ function generar_menu(string $pagina): string
         . redes('menu__redes menu__redes--panel')
         . '</nav>'
         . '</header>'
+        // En celular el header va compacto desde el primer momento, antes de que cargue js/menu.js
+        // (que está al final de la página); así no se ven un instante las pestañas encimadas.
+        . '<script>if (matchMedia("(max-width: 919px)").matches) document.querySelector("[data-menu]").classList.add("menu--compacto");</script>'
         . $fin;
 }
 
@@ -756,33 +746,23 @@ function leer_programas(): array
     return $datos;
 }
 
-function icono_programa(?string $nombre): string
-{
-    $trazo = ICONOS_PROGRAMA[$nombre ?? ''] ?? ICONOS_PROGRAMA['corazon'];
-    return '<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" '
-        . 'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' . $trazo . '</svg>';
-}
-
-function item_galeria(array $j, array $nombres): string
+function item_galeria(array $j): string
 {
     // Foto de la galería de jornadas (el mismo HTML que arma js/programas.js).
     $fecha = lleno($j, 'fecha') ? fecha_larga($j['fecha']) : '';
     $detalle = implode(' · ', array_filter([campo($j, 'lugar', ''), $fecha], 'strlen'));
-    $programa = $nombres[$j['programa']] ?? '';
     return '<li class="galeria__item" data-programa="' . e($j['programa']) . '">'
         . '<button type="button" class="galeria__boton" data-galeria-abrir '
-        . 'data-programa-nombre="' . e($programa) . '" data-titulo="' . e($j['titulo']) . '" '
+        . 'data-titulo="' . e($j['titulo']) . '" '
         . 'data-detalle="' . e($detalle) . '">'
         . '<img src="' . e($j['imagen']) . '" alt="' . e(campo($j, 'descripcion') ?: $j['titulo']) . '" loading="lazy">'
-        . '<span class="galeria__info"><span class="galeria__programa">' . e($programa) . '</span>'
-        . '<span class="galeria__titulo">' . e($j['titulo']) . '</span></span>'
+        . '<span class="galeria__info"><span class="galeria__titulo">' . e($j['titulo']) . '</span></span>'
         . '</button></li>';
 }
 
 function generar_programas(string $pagina): string
 {
     $datos = leer_programas();
-    $tipos = array_column($datos['tipos'], null, 'clave');
     $nombres = array_column($datos['programas'], 'nombre', 'clave');
     $conteo = [];
     foreach ($nombres as $c => $_) {
@@ -820,10 +800,8 @@ function generar_programas(string $pagina): string
         $tarjetas .= '<li class="programa transition transition--slide" data-tipo="' . e($pr['tipo']) . '" id="programa-' . $pr['clave'] . '">'
             . '<article class="programa__tarjeta">'
             . '<div class="programa__foto"><img src="' . e($pr['imagen']) . '" '
-            . 'alt="' . e(campo($pr, 'descripcion_imagen') ?: '') . '" loading="lazy">'
-            . '<span class="programa__icono">' . icono_programa(campo($pr, 'icono')) . '</span></div>'
+            . 'alt="' . e(campo($pr, 'descripcion_imagen') ?: '') . '" loading="lazy"></div>'
             . '<div class="programa__cuerpo">'
-            . '<p class="programa__tipo">' . e($tipos[$pr['tipo']]['nombre']) . '</p>'
             . '<h3 class="programa__nombre">' . e($pr['nombre']) . '</h3>'
             . '<p class="programa__texto">' . e($pr['descripcion']) . '</p>'
             . ($chips !== '' ? '<ul class="programa__ods" aria-label="Objetivos de Desarrollo Sostenible">' . $chips . '</ul>' : '')
@@ -841,7 +819,7 @@ function generar_programas(string $pagina): string
     }
     $fotos = '';
     foreach ($datos['jornadas'] as $j) {
-        $fotos .= item_galeria($j, $nombres);
+        $fotos .= item_galeria($j);
     }
 
     $ods = '';
@@ -890,8 +868,7 @@ function generar_programas(string $pagina): string
 
         . '<dialog class="visor" data-visor aria-label="Foto de la jornada">'
         . '<figure class="visor__figura"><img data-visor-img src="" alt="">'
-        . '<figcaption class="visor__pie"><span class="visor__programa" data-visor-programa></span>'
-        . '<span class="visor__titulo" data-visor-titulo></span><span class="visor__detalle" data-visor-detalle></span>'
+        . '<figcaption class="visor__pie"><span class="visor__titulo" data-visor-titulo></span><span class="visor__detalle" data-visor-detalle></span>'
         . '<span class="visor__contador" data-visor-contador></span></figcaption></figure>'
         . '<button type="button" class="visor__boton visor__boton--cerrar" data-visor-cerrar aria-label="Cerrar">' . ICONO_CERRAR . '</button>'
         . '<button type="button" class="visor__boton visor__boton--anterior" data-visor-anterior aria-label="Foto anterior">' . ICONO_ANTERIOR . '</button>'
@@ -942,11 +919,9 @@ function generar_quienes(string $pagina): string
     $nombre = leer_datos('contacto.json')['nombre_completo'];
     $a = $q['acerca'];
 
-    $principio = function (string $clave, string $etiqueta, string $titulo, string $icono, int $i) use ($q): string {
+    $principio = function (string $clave, string $titulo, int $i) use ($q): string {
         $d = $q[$clave];
         return '<article class="principio transition transition--slide" style="' . retraso($i) . '">'
-            . '<span class="principio__icono">' . icono_quienes($icono) . '</span>'
-            . '<p class="principio__etiqueta">' . $etiqueta . '</p>'
             . '<h3 class="principio__titulo">' . $titulo . '</h3>'
             . '<p class="principio__texto">' . e($d['texto']) . '</p>'
             . '<img class="principio__foto" src="' . e($d['imagen']) . '" '
@@ -984,8 +959,8 @@ function generar_quienes(string $pagina): string
         . '<p class="principios__intro">' . e($q['principios_intro']) . '</p>'
         . '</header>'
         . '<div class="principios__rejilla">'
-        . $principio('mision', 'Propósito social', 'Nuestra Misión', 'diana', 0)
-        . $principio('vision', 'Futuro deseado', 'Nuestra Visión', 'ojo', 1)
+        . $principio('mision', 'Nuestra Misión', 0)
+        . $principio('vision', 'Nuestra Visión', 1)
         . '</div>'
         . '<ul class="valores">' . $valores . '</ul>'
         . '</div></section>'
@@ -1327,6 +1302,8 @@ function leer_blog(): array
             throw new RuntimeException('datos/blog.json: fecha "' . $en['fecha'] . '" no válida (usa AAAA-MM-DD)');
         }
     }
+    // Los borradores (se guardan desde el panel) no se publican.
+    $datos['entradas'] = array_values(array_filter($datos['entradas'], fn($en) => empty($en['borrador'])));
     // Más recientes primero (usort conserva el orden de las que tienen la misma fecha).
     usort($datos['entradas'], fn($a, $b) => strcmp($b['fecha'], $a['fecha']));
     return $datos;
@@ -1355,13 +1332,12 @@ function tarjeta_blog(array $en, string $pagina, string $nivel = 'h2', bool $des
     $r = raiz($pagina);
     $clase = $destacada ? 'blog__tarjeta blog__tarjeta--destacada' : 'blog__tarjeta';
     $carga = $destacada ? '' : ' loading="lazy"';
-    return '<li class="' . $clase . '" data-categoria="' . e($en['categoria']) . '">'
+    return '<li class="' . $clase . '">'
         . '<a class="blog__enlace" href="' . $r . 'blog/' . $en['slug'] . '.html">'
         . '<span class="blog__portada"><img src="' . $r . e($en['imagen']) . '" '
         . 'alt="' . e(campo($en, 'descripcion_imagen') ?: '') . '"' . $carga . '></span>'
         . '<span class="blog__cuerpo">'
-        . '<span class="blog__meta"><span class="blog__categoria">' . e($en['categoria']) . '</span>'
-        . '<time datetime="' . $en['fecha'] . '">' . fecha_larga($en['fecha']) . '</time></span>'
+        . '<span class="blog__meta"><time datetime="' . $en['fecha'] . '">' . fecha_larga($en['fecha']) . '</time></span>'
         . "<$nivel class=\"blog__nombre\">" . e($en['titulo']) . "</$nivel>"
         . '<span class="blog__resumen">' . e($en['resumen']) . '</span>'
         . '<span class="blog__leer">Leer artículo' . ICONO_FLECHA_DERECHA . '</span>'
@@ -1372,13 +1348,7 @@ function generar_listado_blog(string $pagina): string
 {
     $datos = leer_blog();
     $entradas = $datos['entradas'];
-    $filtros = '<button type="button" class="blog__filtro" aria-pressed="true" data-filtro="">Todas</button>';
-    foreach ($datos['categorias'] as $c) {
-        if (in_array($c, array_column($entradas, 'categoria'), true)) {
-            $filtros .= '<button type="button" class="blog__filtro" aria-pressed="false" data-filtro="' . e($c) . '">'
-                . e($c) . '</button>';
-        }
-    }
+    // Sin filtros: los artículos van del más reciente al más antiguo y el primero se destaca.
     $tarjetas = '';
     foreach ($entradas as $i => $en) {
         $tarjetas .= tarjeta_blog($en, $pagina, 'h2', $i === 0);
@@ -1390,9 +1360,7 @@ function generar_listado_blog(string $pagina): string
         . '<header class="blog__encabezado">'
         . '<h1 class="blog__titulo" id="blog-titulo">Nuestro blog</h1>'
         . '</header>'
-        . '<div class="blog__filtros" role="group" aria-label="Filtrar artículos por categoría" data-blog-filtros>' . $filtros . '</div>'
-        . '<ul class="blog__lista blog__lista--todas" data-blog-lista>' . $tarjetas . '</ul>'
-        . '<p class="blog__vacio" data-blog-vacio hidden>Aún no hay publicaciones en esta categoría.</p>'
+        . '<ul class="blog__lista blog__lista--todas">' . $tarjetas . '</ul>'
         . '</div>'
         . '</section>'
         . '<section class="eventos eventos--blog" aria-labelledby="blog-eventos-titulo">'
@@ -1505,9 +1473,7 @@ function generar_pagina_entrada(array $en, array $entradas): string
         . '<article class="entrada__articulo">'
         . '<header class="entrada__encabezado">'
         . '<nav class="entrada__migas" aria-label="Ruta de navegación"><a href="' . $r . 'index.html">Inicio</a>'
-        . '<span aria-hidden="true">/</span><a href="' . $r . 'blog.html">Blog</a>'
-        . '<span aria-hidden="true">/</span><span>' . e($en['categoria']) . '</span></nav>'
-        . '<p class="entrada__categoria">' . e($en['categoria']) . '</p>'
+        . '<span aria-hidden="true">/</span><a href="' . $r . 'blog.html">Blog</a></nav>'
         . '<h1 class="entrada__titulo">' . $titulo . '</h1>'
         . '<p class="entrada__meta"><time datetime="' . $en['fecha'] . '">' . fecha_larga($en['fecha']) . '</time>'
         . '<span aria-hidden="true">·</span><span>' . minutos_lectura($en) . ' min de lectura</span></p>'

@@ -1,0 +1,5 @@
+# Datos privados del panel (cuentas, bitácora, respaldos): no van al repositorio.
+privado/*
+!privado/.htaccess
+!privado/LEEME.txt
+.DS_Store

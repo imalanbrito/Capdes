@@ -89,7 +89,8 @@ se muestran las fotos de la lista `"jornadas"`, así que conviene dejarlas como 
 
 ## Nuestro impacto — `datos/impacto.json`
 
-- **titulo** y **cita**: el título de la sección y la frase destacada.
+- **titulo** y **cita**: el título de la sección y la frase destacada. La cita se escribe sin
+  comillas: la página se las pone sola.
 - **cifras**: los números grandes que cuentan hacia arriba al aparecer.
 
   ```json
@@ -202,8 +203,8 @@ Cada artículo tiene su propia página (`blog/<slug>.html`) y aparece en el list
   sin acentos ni espacios, y sin repetirse. **No lo cambies después de publicar**: los
   enlaces que ya se compartieron dejarían de funcionar.
 - **fecha**: en formato `AAAA-MM-DD` (año, mes y día). En la página se ve como "15 de noviembre de 2026".
-- **categoria**: una de las de la lista `"categorias"` (Noticias, Eventos, Reflexiones). Los
-  botones para filtrar solo muestran las categorías que tienen artículos.
+- **categoria**: una de las de la lista `"categorias"` (Noticias, Eventos, Reflexiones). Se ve
+  como etiqueta en la tarjeta y en el artículo.
 - **resumen**: una o dos frases; se ve en el listado y en la vista previa al compartir en
   WhatsApp o Facebook.
 - **contenido**: un texto por párrafo. Se permiten **negritas** (`**texto**`) y *cursivas* (`*texto*`).
@@ -244,10 +245,9 @@ Para agregar una jornada, sube la foto a `img/galeria/` y agrega un bloque en `"
 ### Programas y tipos
 
 - **programas**: cada uno con `clave` (minúsculas y guiones, sin cambiarla después),
-  `nombre`, `tipo`, `icono`, `imagen`, `descripcion_imagen`, `descripcion` y `ods`.
+  `nombre`, `tipo`, `imagen`, `descripcion_imagen`, `descripcion` y `ods`.
   - **tipo**: la `clave` de uno de los `"tipos"` (`"asistenciales"`, `"desarrollo-social"`,
     `"sostenibilidad"`). Cada tipo es una pestaña para filtrar los programas.
-  - **icono**: `"salud"`, `"educacion"`, `"brote"`, `"personas"`, `"apoyo"` o `"corazon"`.
   - **ods**: los números (del 1 al 17) de los Objetivos de Desarrollo Sostenible con los que se
     relaciona; se muestran en la tarjeta y se resaltan en la sección de la Agenda 2030.
 - **intro**, **modelo**, **agenda_2030** e **imagen_portada**: textos y foto de la portada y

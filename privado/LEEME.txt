@@ -1,0 +1,4 @@
+Datos privados del panel de administrador: cuentas (usuarios.php), intentos de entrada,
+bitácora y respaldos de los archivos de datos/. El servidor no entrega esta carpeta.
+No se sube a GitHub (ver .gitignore), pero sí debe subirse a Hostinger con el sitio.
+Para crear la primera cuenta: php herramientas/crear-usuario.php
