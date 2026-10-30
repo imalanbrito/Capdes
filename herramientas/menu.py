@@ -10,6 +10,8 @@ El script también:
 - enlaza css/renovacion.css y js/menu.js en cada página,
 - arma las diapositivas del carrusel de jornadas (inicio) desde datos/jornadas.json,
 - arma la página de Programas desde datos/programas.json,
+- arma la página de Contacto (datos/contacto.json),
+- arma el Marco institucional (datos/marco.json) y el Aviso de privacidad (datos/aviso-privacidad.json),
 - arma el blog desde datos/blog.json: el listado (blog.html) y una página por artículo (blog/<slug>.html),
 - arma "Nuestro impacto", los eventos, los donativos y los aliados (inicio) desde
   datos/impacto.json, datos/eventos.json, datos/donar.json y datos/aliados.json,
@@ -56,7 +58,7 @@ MENU = [
     ]),
     ("Contacto", "contacto.html", [
         ("Escríbenos", "contacto.html#formulario"),
-        ("Voluntariado y servicio social", "contacto.html#formulario"),
+        ("Voluntariado y servicio social", "contacto.html?motivo=voluntariado#formulario"),
         ("Ubicación", "contacto.html#ubicacion"),
     ]),
 ]
@@ -75,13 +77,6 @@ ACTIVA = {
 ANCLAS = {
     "index.html": [("eventos", "zXDtLi"), ("donar", "zwZ-vA"), ("aliados", "zzHakD")],
     "quienes-somos.html": [("acerca", "zYUchx"), ("mision-vision-valores", "zB7aPl")],
-    "marco-institucional.html": [
-        ("identidad", "zVT-Di"),
-        ("planeacion", "ztjK4x"),
-        ("marco-normativo", "zVi5id"),
-        ("informes", "znZ5W_"),
-    ],
-    "contacto.html": [("formulario", "zXR5Ei"), ("ubicacion", "eOBFmV")],
 }
 
 # Scripts propios que solo carga una página (además de menu.js y contador.js).
@@ -89,6 +84,8 @@ JS_POR_PAGINA = {
     "index.html": ["inicio"],
     "blog.html": ["inicio", "blog"],
     "programas.html": ["programas"],
+    "marco-institucional.html": ["marco"],
+    "contacto.html": ["contacto"],
 }
 
 # Dirección pública del sitio: se usa en los enlaces para compartir y en las vistas previas.
@@ -323,10 +320,16 @@ def generar_pie(pagina):
         f'<button type="submit">Quiero recibir noticias</button>'
         f'</form>'
         f'<p class="pie__aviso" data-pie-aviso role="status"></p>'
-        f'</div>'
+        + (f'<p class="pie__privacidad">Al suscribirte aceptas nuestro '
+           f'<a href="{raiz(pagina)}aviso-de-privacidad.html">aviso de privacidad</a>.</p>' if aviso_publicado() else "")
+        + f'</div>'
         f'</div>'
         f'<div class="pie__base">'
         f'<p>© <span data-pie-anio>{date.today().year}</span> CAPDES, A.C. Todos los derechos reservados.</p>'
+        f'<nav class="pie__legal" aria-label="Información legal">'
+        + (f'<a {atributos_enlace("aviso-de-privacidad.html", pagina)}>Aviso de privacidad</a>' if aviso_publicado() else "")
+        + f'<a {atributos_enlace("marco-institucional.html", pagina)}>Transparencia</a>'
+        f'</nav>'
         f'<a class="pie__arriba" href="#">Volver arriba{ICONO_ARRIBA}</a>'
         f'</div>'
         f'</footer>'
@@ -746,8 +749,8 @@ def generar_programas(pagina):
         f'<p class="suscribir__texto">Dona, súmate como voluntario o construyamos juntos una alianza.</p></div>'
         f'<div class="apoyar__botones">'
         f'<a class="suscribir__boton" href="index.html#donar">{ICONO_CORAZON}Donar</a>'
-        f'<a class="suscribir__boton suscribir__boton--linea" href="contacto.html#formulario">Ser voluntario</a>'
-        f'<a class="suscribir__boton suscribir__boton--linea" href="contacto.html#formulario">Hacer una alianza</a>'
+        f'<a class="suscribir__boton suscribir__boton--linea" href="contacto.html?motivo=voluntariado#formulario">Ser voluntario</a>'
+        f'<a class="suscribir__boton suscribir__boton--linea" href="contacto.html?motivo=alianza#formulario">Hacer una alianza</a>'
         f'</div></div></section>'
         f'{PROGRAMAS_FIN}'
     )
@@ -767,6 +770,312 @@ def insertar_programas(s, pagina):
         raise SystemExit("programas.html: no encontré las secciones originales")
     fin = s.index("</section>", ultima) + len("</section>")
     return s[:inicio] + bloque + s[fin:]
+
+
+# ───────────── Contacto (datos/contacto.json) ─────────────
+
+CONTACTO_INICIO = "<!-- contacto:inicio -->"
+CONTACTO_FIN = "<!-- contacto:fin -->"
+
+ICONO_UBICACION_GRANDE = ('<svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+                          'stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">'
+                          '<path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/>'
+                          '<circle cx="12" cy="9.5" r="2.5"/></svg>')
+
+
+def canales_contacto(c):
+    """Tarjetas de contacto directo de la página de Contacto."""
+    canales = []
+    if c.get("telefono"):
+        tel = re.sub(r"[^\d+]", "", c["telefono"])
+        canales.append(("Llámanos", c["telefono"], f"tel:{tel}", ICONO_TELEFONO, False))
+    if c.get("whatsapp"):
+        canales.append(("WhatsApp", "Escríbenos por WhatsApp", f'https://wa.me/{re.sub(r"[^0-9]", "", c["whatsapp"])}',
+                        ICONO_MENSAJE, True))
+    if c.get("correo"):
+        canales.append(("Correo", c["correo"], f'mailto:{c["correo"]}', ICONO_CORREO, False))
+    tarjetas = "".join(
+        f'<li><a class="canal" href="{html.escape(url)}"'
+        + (' target="_blank" rel="noopener"' if externo else "")
+        + f'><span class="canal__icono">{icono}</span><span class="canal__texto">'
+        f'<span class="canal__tipo">{html.escape(tipo)}</span><span class="canal__dato">{html.escape(dato)}</span>'
+        f'</span></a></li>'
+        for tipo, dato, url, icono, externo in canales)
+    return tarjetas
+
+
+def generar_contacto(pagina):
+    c = leer_datos("contacto.json")
+    opciones = '<option value="" disabled selected>Elige una opción</option>' + "".join(
+        f'<option value="{html.escape(m["clave"])}">{html.escape(m["texto"])}</option>' for m in c["motivos"])
+    if c.get("mapa_url"):
+        mapa = (f'<iframe class="ubicacion__mapa" src="{html.escape(c["mapa_url"])}" title="Mapa de ubicaciones de CAPDES" '
+                f'loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>')
+    else:
+        mapa = (f'<div class="ubicacion__mapa ubicacion__mapa--pendiente">{ICONO_UBICACION_GRANDE}'
+                f'<p class="ubicacion__pendiente-titulo">Mapa de ubicaciones</p></div>')
+    return (
+        f'{CONTACTO_INICIO}'
+        f'<section class="contacto">'
+        f'<div class="contacto__fondo" aria-hidden="true">'
+        f'<img class="contacto__poster" src="img/contacto/fondo-contacto.jpg" alt="">'
+        # El video solo se carga en pantallas grandes (js/contacto.js); en celular queda la imagen.
+        f'<video class="contacto__video" muted loop playsinline preload="none" '
+        f'data-src="img/contacto/fondo-contacto.mp4" data-contacto-video></video>'
+        f'</div>'
+        f'<div class="contacto__contenido">'
+        f'<header class="contacto__encabezado">'
+        f'<p class="portada__antetitulo">• Contacto</p>'
+        f'<h1 class="contacto__titulo">Contáctanos</h1>'
+        f'<p class="contacto__intro">Si deseas que CAPDES, A.C. llegue a tu comunidad, escríbenos. También puedes '
+        f'sumarte como voluntario, proponernos una alianza o resolver cualquier duda.</p>'
+        f'</header>'
+        f'<div class="contacto__rejilla">'
+        f'<div class="contacto__canales">'
+        f'<h2 class="contacto__subtitulo">Habla con nosotros</h2>'
+        f'<ul class="canales">{canales_contacto(c)}</ul>'
+        f'<div class="contacto__redes"><p>Síguenos</p><div class="pie__redes">{enlaces_redes()}</div></div>'
+        f'</div>'
+        f'<form class="formulario" id="formulario" action="api/contacto.php" method="post" novalidate '
+        f'data-contacto-formulario data-correo="{html.escape(c["correo"])}">'
+        f'<h2 class="contacto__subtitulo formulario__titulo">Envíanos un mensaje</h2>'
+        f'<p class="formulario__nota">Los campos con <span aria-hidden="true">*</span><span class="solo-lectores">asterisco</span> son obligatorios.</p>'
+        f'<div class="formulario__fila">'
+        f'<div class="campo"><label for="c-nombre">Nombre(s) <span class="campo__obligatorio" aria-hidden="true">*</span></label>'
+        f'<input id="c-nombre" name="nombre" type="text" autocomplete="given-name" required maxlength="80"></div>'
+        f'<div class="campo"><label for="c-apellidos">Apellidos</label>'
+        f'<input id="c-apellidos" name="apellidos" type="text" autocomplete="family-name" maxlength="80"></div>'
+        f'</div>'
+        f'<div class="formulario__fila">'
+        f'<div class="campo"><label for="c-correo">Correo electrónico <span class="campo__obligatorio" aria-hidden="true">*</span></label>'
+        f'<input id="c-correo" name="correo" type="email" autocomplete="email" required maxlength="120"></div>'
+        f'<div class="campo"><label for="c-telefono">Teléfono o WhatsApp</label>'
+        f'<input id="c-telefono" name="telefono" type="tel" autocomplete="tel" maxlength="30"></div>'
+        f'</div>'
+        f'<div class="campo"><label for="c-motivo">¿En qué te podemos ayudar? <span class="campo__obligatorio" aria-hidden="true">*</span></label>'
+        f'<select id="c-motivo" name="motivo" required>{opciones}</select></div>'
+        f'<div class="campo"><label for="c-mensaje">Mensaje <span class="campo__obligatorio" aria-hidden="true">*</span></label>'
+        f'<textarea id="c-mensaje" name="mensaje" rows="5" required maxlength="4000" '
+        f'placeholder="Cuéntanos sobre tu comunidad, tu idea o tu duda."></textarea></div>'
+        # Campo trampa contra spam: las personas no lo ven; los robots suelen llenarlo.
+        f'<div class="formulario__trampa" aria-hidden="true"><label for="c-sitio">No llenes este campo</label>'
+        f'<input id="c-sitio" name="sitio" type="text" tabindex="-1" autocomplete="off"></div>'
+        f'<button class="formulario__enviar" type="submit">Enviar mensaje{ICONO_FLECHA_DERECHA}</button>'
+        f'<p class="formulario__estado" role="status" data-contacto-estado></p>'
+        f'</form>'
+        f'</div></div></section>'
+        f'<section class="ubicacion" id="ubicacion" aria-labelledby="ubicacion-titulo">'
+        f'<div class="ubicacion__contenido">'
+        f'<div class="ubicacion__texto">'
+        f'<p class="programas__antetitulo">• Ubicación</p>'
+        f'<h2 class="programas__titulo" id="ubicacion-titulo">Dónde trabajamos</h2>'
+        f'<p>Nuestra organización se encuentra en el corazón de la comunidad, trabajando para empoderar a las '
+        f'poblaciones vulnerables y reducir las desigualdades sociales.</p>'
+        f'<p class="ubicacion__lugar">{ICONO_UBICACION}{html.escape(c.get("ubicacion", ""))}</p>'
+        f'</div>'
+        f'{mapa}'
+        f'</div></section>'
+        f'{CONTACTO_FIN}'
+    )
+
+
+def insertar_contacto(s, pagina):
+    if pagina != "contacto.html":
+        return s
+    bloque = generar_contacto(pagina)
+    s = re.sub(r"<title>[^<]*</title>", "<title>Contacto | CAPDES, A.C.</title>", s, count=1)
+    if CONTACTO_INICIO in s:
+        return re.sub(re.escape(CONTACTO_INICIO) + ".*?" + re.escape(CONTACTO_FIN), lambda _: bloque, s, count=1, flags=re.S)
+    # Primera vez: reemplaza el formulario y la ubicación de Hostinger (con sus anclas).
+    inicio = s.find('<span id="formulario" class="ancla">')
+    if inicio == -1:
+        inicio = s.find('<section id="zXR5Ei"')
+    ultima = s.find('<section id="eOBFmV"')
+    if inicio == -1 or ultima == -1:
+        raise SystemExit("contacto.html: no encontré las secciones originales")
+    fin = s.index("</section>", ultima) + len("</section>")
+    return s[:inicio] + bloque + s[fin:]
+
+
+# ───────────── Marco institucional (datos/marco.json) y Aviso de privacidad ─────────────
+
+MARCO_INICIO = "<!-- marco:inicio -->"
+MARCO_FIN = "<!-- marco:fin -->"
+
+ICONO_DOCUMENTO = ('<svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+                   'stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+                   '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>'
+                   '<path d="M8 13h8M8 17h5"/></svg>')
+ICONO_DESCARGAR = ('<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+                   'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'
+                   '<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>')
+ICONO_VER = ('<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="none" '
+             'stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'
+             '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>')
+
+
+def peso_archivo(ruta):
+    """Formato y peso de un documento del sitio, p. ej. "PDF · 347 KB"."""
+    archivo = RAIZ / ruta
+    if not archivo.exists():
+        raise SystemExit(f'datos/marco.json: no existe el archivo "{ruta}"')
+    kb = archivo.stat().st_size / 1024
+    tamano = f"{kb / 1024:.1f} MB".replace(".", ",") if kb >= 1024 else f"{round(kb)} KB"
+    return f'{archivo.suffix.lstrip(".").upper()} · {tamano}'
+
+
+def documento_marco(d):
+    meta = []
+    if d.get("clave"):
+        meta.append(f'Clave {html.escape(d["clave"])}')
+    if d.get("vigente_desde"):
+        meta.append(f'Vigente desde el {fecha_larga(d["vigente_desde"])}')
+    if d.get("archivo"):
+        meta.append(peso_archivo(d["archivo"]))
+        nombre = html.escape(d["titulo"])
+        acciones = (
+            f'<div class="documento__acciones">'
+            f'<a class="documento__boton" href="{html.escape(d["archivo"])}" target="_blank" rel="noopener">'
+            f'{ICONO_VER}Ver<span class="solo-lectores"> {nombre} (se abre en otra pestaña)</span></a>'
+            f'<a class="documento__boton documento__boton--principal" href="{html.escape(d["archivo"])}" download>'
+            f'{ICONO_DESCARGAR}Descargar<span class="solo-lectores"> {nombre}</span></a>'
+            f'</div>'
+        )
+        clase = "documento"
+    else:
+        acciones = '<p class="documento__estado">Próximamente</p>'
+        clase = "documento documento--pendiente"
+    return (
+        f'<li class="{clase}">'
+        f'<span class="documento__icono">{ICONO_DOCUMENTO}</span>'
+        f'<div class="documento__info">'
+        f'<h3 class="documento__titulo">{html.escape(d["titulo"])}</h3>'
+        + (f'<p class="documento__meta">{" · ".join(meta)}</p>' if meta else "")
+        + f'<p class="documento__texto">{html.escape(d["descripcion"])}</p>'
+        f'</div>{acciones}</li>'
+    )
+
+
+def generar_marco(pagina):
+    datos = leer_datos("marco.json")
+    ficha = "".join(
+        f'<div class="ficha__fila"><dt>{html.escape(f["campo"])}</dt>'
+        + (f'<dd>{html.escape(f["valor"])}</dd>' if f["valor"] else '<dd class="ficha__pendiente">Por confirmar</dd>')
+        + '</div>'
+        for f in datos["ficha"])
+    # La ficha legal solo se muestra cuando "mostrar_ficha" es true (sus datos los confirma la clienta).
+    con_ficha = datos.get("mostrar_ficha", False)
+    indice = ('<li><a href="#ficha">Ficha institucional</a></li>' if con_ficha else "") + "".join(
+        f'<li><a href="#{g["clave"]}">{html.escape(g["titulo"])}</a></li>' for g in datos["grupos"]
+    ) + '<li><a href="#solicitudes">Solicitudes de información</a></li>'
+    grupos = "".join(
+        f'<section class="marco__seccion" id="{g["clave"]}" aria-labelledby="titulo-{g["clave"]}">'
+        f'<h2 class="marco__subtitulo" id="titulo-{g["clave"]}">{html.escape(g["titulo"])}</h2>'
+        f'<ul class="documentos">{"".join(documento_marco(d) for d in g["documentos"])}</ul>'
+        f'</section>'
+        for g in datos["grupos"])
+    total = sum(1 for g in datos["grupos"] for d in g["documentos"] if d.get("archivo"))
+    correo = next((f["valor"] for f in datos["ficha"] if "correo" in f["campo"].lower() and f["valor"]),
+                  leer_datos("contacto.json")["correo"])
+    return (
+        f'{MARCO_INICIO}'
+        f'<div class="marco">'
+        f'<header class="marco__portada"><div class="marco__portada-contenido">'
+        f'<p class="marco__antetitulo">Transparencia y rendición de cuentas</p>'
+        f'<h1 class="marco__titulo">Marco institucional</h1>'
+        + "".join(f'<p class="marco__intro">{html.escape(t)}</p>' for t in datos["intro"]) +
+        f'<div class="marco__acciones">'
+        f'<a class="marco__boton marco__boton--principal" href="{html.escape(datos["carpeta"])}" download>'
+        f'{ICONO_DESCARGAR}<span>Descargar carpeta institucional completa'
+        f'<small>{peso_archivo(datos["carpeta"])} · {total} documentos</small></span></a>'
+        + (f'<a class="marco__boton" href="aviso-de-privacidad.html">Aviso de privacidad</a>' if aviso_publicado() else "")
+        + f'</div>'
+        f'<p class="marco__actualizado">Última actualización: <time datetime="{datos["actualizado"]}">'
+        f'{fecha_larga(datos["actualizado"])}</time></p>'
+        f'</div></header>'
+        f'<div class="marco__cuerpo">'
+        f'<aside class="marco__indice"><nav aria-label="Contenido de esta página" data-marco-indice>'
+        f'<p class="marco__indice-titulo">En esta página</p><ol>{indice}</ol></nav></aside>'
+        f'<div class="marco__contenido">'
+        + (f'<section class="marco__seccion" id="ficha" aria-labelledby="titulo-ficha">'
+           f'<h2 class="marco__subtitulo" id="titulo-ficha">Ficha institucional</h2>'
+           f'<dl class="ficha">{ficha}</dl></section>' if con_ficha else "")
+        + f'{grupos}'
+        f'<section class="marco__seccion marco__solicitudes" id="solicitudes" aria-labelledby="titulo-solicitudes">'
+        f'<h2 class="marco__subtitulo" id="titulo-solicitudes">Solicitudes de información</h2>'
+        f'<p>{html.escape(datos["contacto"])}</p>'
+        f'<a class="marco__correo" href="mailto:{html.escape(correo)}">{ICONO_CORREO}{html.escape(correo)}</a>'
+        f'</section>'
+        f'</div></div></div>'
+        f'{MARCO_FIN}'
+    )
+
+
+def insertar_marco(s, pagina):
+    if pagina != "marco-institucional.html":
+        return s
+    bloque = generar_marco(pagina)
+    s = re.sub(r"<title>[^<]*</title>", "<title>Marco institucional | CAPDES, A.C.</title>", s, count=1)
+    if MARCO_INICIO in s:
+        return re.sub(re.escape(MARCO_INICIO) + ".*?" + re.escape(MARCO_FIN), lambda _: bloque, s, count=1, flags=re.S)
+    # Primera vez: reemplaza las secciones de Hostinger, desde la introducción hasta el contacto final.
+    inicio = s.find('<section id="ai-WXDGTR"')
+    ultima = s.find('<section id="zXz15i"')
+    if inicio == -1 or ultima == -1:
+        raise SystemExit("marco-institucional.html: no encontré las secciones originales")
+    fin = s.index("</section>", ultima) + len("</section>")
+    return s[:inicio] + bloque + s[fin:]
+
+
+def aviso_publicado():
+    """El aviso de privacidad (y sus enlaces) solo existe cuando "publicar" es true."""
+    return leer_datos("aviso-privacidad.json").get("publicar", False)
+
+
+def generar_aviso():
+    datos = leer_datos("aviso-privacidad.json")
+    pagina = "aviso-de-privacidad.html"
+    if not datos.get("publicar", False):
+        ruta = RAIZ / pagina
+        if ruta.exists() and GENERADOR in ruta.read_text(encoding="utf-8"):
+            ruta.unlink()
+            print(f"✗ {pagina} (no publicado: \"publicar\" es false en datos/aviso-privacidad.json)")
+        return
+    secciones = []
+    for i, sec in enumerate(datos["secciones"], start=1):
+        partes = [f'<h2>{i}. {html.escape(sec["titulo"])}</h2>']
+        partes += [f'<p>{html.escape(t)}</p>' for t in sec.get("parrafos", [])]
+        if sec.get("lista"):
+            partes.append("<ul>" + "".join(f"<li>{html.escape(t)}</li>" for t in sec["lista"]) + "</ul>")
+        partes += [f'<p>{html.escape(t)}</p>' for t in sec.get("parrafos_finales", [])]
+        secciones.append(f'<section class="legal__seccion">{"".join(partes)}</section>')
+    revision = ('<p class="legal__revision" role="note"><strong>Borrador en revisión.</strong> Este aviso está '
+                'pendiente de revisión legal y de completar los datos del responsable; no es la versión definitiva.</p>'
+                if datos.get("en_revision") else "")
+    cuerpo = (
+        f'<main class="entrada legal">'
+        f'<article class="entrada__articulo">'
+        f'<header class="entrada__encabezado">'
+        f'<nav class="entrada__migas" aria-label="Ruta de navegación"><a href="index.html">Inicio</a>'
+        f'<span aria-hidden="true">/</span><a href="marco-institucional.html">Marco institucional</a></nav>'
+        f'<h1 class="entrada__titulo">Aviso de privacidad</h1>'
+        f'<p class="entrada__meta">Última actualización: <time datetime="{datos["actualizado"]}">'
+        f'{fecha_larga(datos["actualizado"])}</time></p>'
+        f'</header>'
+        f'{revision}'
+        f'<div class="legal__contenido">{"".join(secciones)}</div>'
+        f'<p class="legal__relacionado">Consulta también nuestra '
+        f'<a href="documentos/polpdpys-008-politica-proteccion-de-datos.pdf" target="_blank" rel="noopener">'
+        f'Política de Protección de Datos Personales y Salvaguarda</a> en el '
+        f'<a href="marco-institucional.html#marco-normativo">Marco institucional</a>.</p>'
+        f'</article></main>'
+    )
+    (RAIZ / pagina).write_text(
+        pagina_limpia(pagina, "Aviso de privacidad | CAPDES, A.C.",
+                      "Cómo CAPDES, A.C. trata y protege los datos personales que recibe a través de este sitio.",
+                      cuerpo, clase_body="pagina-entrada"),
+        encoding="utf-8")
+    print(f"✓ {pagina}")
 
 
 # ───────────── Blog (datos/blog.json) ─────────────
@@ -900,6 +1209,36 @@ def relacionadas(entrada, entradas, cuantas=3):
     return (misma + resto)[:cuantas]
 
 
+def pagina_limpia(pagina, titulo, descripcion, cuerpo, scripts=(), head_extra="", clase_body=""):
+    """Página completa con menú y pie, sin el código de Hostinger (artículos, aviso de privacidad)."""
+    r = raiz(pagina)
+    css = f'{r}css/renovacion.css?v={version("css/renovacion.css")}'
+    js = "".join(
+        f'<script src="{r}js/{n}.js?v={version(f"js/{n}.js")}"></script>'
+        for n in ("animaciones", "menu", "contador", "pie") + tuple(scripts))
+    clase = f' class="{clase_body}"' if clase_body else ""
+    return (
+        f'<!doctype html>\n<html lang="es" data-raiz="{r}"><head>'
+        f'<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
+        f'{GENERADOR}'
+        f'<title>{titulo}</title>'
+        f'<meta name="description" content="{descripcion}">'
+        f'<link rel="canonical" href="{SITIO}{pagina}">'
+        f'<link rel="icon" href="{r}img/favicon.ico" sizes="any">'
+        f'<link rel="icon" type="image/png" sizes="32x32" href="{r}img/favicon-32.png">'
+        f'<link rel="apple-touch-icon" href="{r}img/apple-touch-icon.png">'
+        f'{FUENTES}'
+        f'<link rel="stylesheet" href="{r}css/main.css"><link rel="stylesheet" href="{css}">'
+        f'{head_extra}'
+        f'</head><body{clase}>'
+        f'<div class="top-blocks">{generar_menu(pagina)}</div>'
+        f'{cuerpo}'
+        f'{generar_pie(pagina)}'
+        f'{js}'
+        f'</body></html>\n'
+    )
+
+
 def generar_pagina_entrada(e, entradas):
     pagina = f'blog/{e["slug"]}.html'
     r = raiz(pagina)
@@ -915,32 +1254,17 @@ def generar_pagina_entrada(e, entradas):
         "author": {"@type": "Organization", "name": "CAPDES, A.C."},
         "publisher": {"@type": "Organization", "name": "CAPDES, A.C."},
     }, ensure_ascii=False)
-    css = f'{r}css/renovacion.css?v={version("css/renovacion.css")}'
-    scripts = "".join(
-        f'<script src="{r}js/{n}.js?v={version(f"js/{n}.js")}"></script>'
-        for n in ("animaciones", "menu", "contador", "pie", "blog"))
     contenido = "".join(f"<p>{texto_con_formato(p)}</p>" for p in e["contenido"])
     sugeridas = "".join(tarjeta_blog(x, pagina, nivel="h3") for x in relacionadas(e, entradas))
-    return (
-        f'<!doctype html>\n<html lang="es" data-raiz="{r}"><head>'
-        f'<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-        f'{GENERADOR}'
-        f'<title>{titulo} | Blog de CAPDES, A.C.</title>'
-        f'<meta name="description" content="{resumen}">'
-        f'<link rel="canonical" href="{url}">'
+    head_extra = (
         f'<meta property="og:type" content="article"><meta property="og:site_name" content="CAPDES, A.C.">'
         f'<meta property="og:title" content="{titulo}"><meta property="og:description" content="{resumen}">'
         f'<meta property="og:url" content="{url}"><meta property="og:image" content="{imagen_abs}">'
         f'<meta property="article:published_time" content="{e["fecha"]}">'
         f'<meta name="twitter:card" content="summary_large_image">'
-        f'<link rel="icon" href="{r}img/favicon.ico" sizes="any">'
-        f'<link rel="icon" type="image/png" sizes="32x32" href="{r}img/favicon-32.png">'
-        f'<link rel="apple-touch-icon" href="{r}img/apple-touch-icon.png">'
-        f'{FUENTES}'
-        f'<link rel="stylesheet" href="{r}css/main.css"><link rel="stylesheet" href="{css}">'
         f'<script type="application/ld+json">{datos_ld}</script>'
-        f'</head><body class="pagina-entrada">'
-        f'<div class="top-blocks">{generar_menu(pagina)}</div>'
+    )
+    cuerpo = (
         f'<main class="entrada">'
         f'<article class="entrada__articulo">'
         f'<header class="entrada__encabezado">'
@@ -970,17 +1294,16 @@ def generar_pagina_entrada(e, entradas):
         f'<p>Tu apoyo hace posibles nuestras jornadas, talleres y programas en las comunidades.</p>'
         f'<div class="entrada__invitacion-botones">'
         f'<a class="entrada__cta entrada__cta--donar" href="{r}index.html#donar">{ICONO_CORAZON}Donar</a>'
-        f'<a class="entrada__cta entrada__cta--voluntario" href="{r}contacto.html#formulario">Quiero ser voluntario</a>'
+        f'<a class="entrada__cta entrada__cta--voluntario" href="{r}contacto.html?motivo=voluntariado#formulario">Quiero ser voluntario</a>'
         f'</div></aside>'
         f'</article>'
         + (f'<section class="entrada__relacionadas" aria-labelledby="relacionadas-titulo">'
            f'<h2 class="entrada__relacionadas-titulo" id="relacionadas-titulo">Sigue leyendo</h2>'
            f'<ul class="blog__lista">{sugeridas}</ul></section>' if sugeridas else "")
-        + f'</main>'
-        f'{generar_pie(pagina)}'
-        f'{scripts}'
-        f'</body></html>\n'
+        + '</main>'
     )
+    return pagina_limpia(pagina, f'{titulo} | Blog de CAPDES, A.C.', resumen, cuerpo,
+                         scripts=("blog",), head_extra=head_extra, clase_body="pagina-entrada")
 
 
 def generar_entradas():
@@ -1057,6 +1380,8 @@ def aplicar(pagina):
     s = insertar_contenido_inicio(s, pagina)
     s = insertar_blog(s, pagina)
     s = insertar_programas(s, pagina)
+    s = insertar_marco(s, pagina)
+    s = insertar_contacto(s, pagina)
     s = enlazar_recursos(s, pagina)
     ruta.write_text(s, encoding="utf-8")
     print(f"✓ {pagina}")
@@ -1066,3 +1391,4 @@ if __name__ == "__main__":
     for pagina in ACTIVA:
         aplicar(pagina)
     generar_entradas()
+    generar_aviso()

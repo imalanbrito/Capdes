@@ -12,9 +12,11 @@ se vea.
 | Eventos y actividades comunitarias    | `datos/eventos.json`    | `img/eventos/`    |
 | Donativos (PayPal, GoFundMe)          | `datos/donar.json`      | —                 |
 | Nuestros aliados (logos)              | `datos/aliados.json`    | `img/aliados/`    |
-| Contacto y redes (pie de página y menú, todas las páginas) | `datos/contacto.json` | — |
+| Contacto y redes (pie de página, menú y página de Contacto) | `datos/contacto.json` | `img/contacto/` |
 | Blog: listado y una página por artículo | `datos/blog.json` | `img/blog/` |
 | Programas: programas, galería de jornadas y ODS | `datos/programas.json` | `img/programas/`, `img/galeria/` |
+| Marco institucional: ficha y documentos | `datos/marco.json` | `documentos/` (PDF) |
+| Aviso de privacidad | `datos/aviso-privacidad.json` | — |
 
 > Más adelante estos archivos se editarán desde un panel de administrador
 > (`capdes.org/admin`) con formularios. Mientras tanto, se editan a mano con las
@@ -250,3 +252,67 @@ Para agregar una jornada, sube la foto a `img/galeria/` y agrega un bloque en `"
 
 **Importante:** los cambios a programas, tipos, ODS o textos necesitan correr
 `python3 herramientas/menu.py`. Las jornadas de la galería no lo necesitan.
+
+## Marco institucional — `datos/marco.json`
+
+Es la página con más peso legal del sitio: revisa dos veces antes de publicar.
+
+- **ficha**: los datos legales de la asociación. **Hoy está oculta** (`"mostrar_ficha": false`).
+  Para publicarla, llena los valores que la asociación quiera mostrar, borra los que no, y cambia
+  `"mostrar_ficha"` a `true`. Un campo que quede con `"valor": ""` se mostraría como "Por confirmar".
+- **grupos → documentos**: cada documento tiene `titulo`, `clave` (la del propio documento,
+  p. ej. `"CAPDES_AC/CEYC-002/2025"`), `vigente_desde` (`AAAA-MM-DD`, opcional), `descripcion` y
+  `archivo` (la ruta del PDF en `documentos/`).
+  - Para **publicar una versión nueva**: sube el PDF a `documentos/`, cambia `archivo`, `clave` y
+    `vigente_desde`, y actualiza `actualizado` (la fecha de "Última actualización" de la página).
+  - Con `"archivo": ""` el documento se muestra como "Próximamente" (así está el Informe anual).
+  - El peso del archivo (PDF · 347 KB) se calcula solo.
+- **carpeta**: el PDF con la carpeta institucional completa.
+
+## Aviso de privacidad — `datos/aviso-privacidad.json`
+
+**Hoy no está publicado** (`"publicar": false`): no existe la página `aviso-de-privacidad.html`
+ni hay enlaces a ella. El texto es un borrador redactado a partir de la Política de Protección de
+Datos Personales y Salvaguarda (CAPDES_AC/POLPDPYS-008/2025) y **debe revisarlo un abogado**.
+
+Para publicarlo:
+
+1. Completa la razón social y el domicilio del responsable (donde dice "[por confirmar]").
+2. Aplica los cambios que indique la revisión legal.
+3. Cambia `"publicar"` a `true` y `"en_revision"` a `false`, actualiza `"actualizado"` y corre
+   `python3 herramientas/menu.py`. Se crea la página y aparecen sus enlaces en el pie de página,
+   bajo el formulario de suscripción y en el Marco institucional.
+
+Si el sitio empieza a recabar otros datos (por ejemplo, un formulario de voluntariado con
+teléfono o edad), hay que actualizar este aviso.
+
+## Página de Contacto — `datos/contacto.json`
+
+Además de los datos de contacto y redes (ver arriba), este archivo controla:
+
+- **motivos**: las opciones de "¿En qué te podemos ayudar?". Cada una tiene `clave` (minúsculas, sin
+  espacios) y `texto`. Los botones del sitio pueden llegar con un motivo ya elegido usando la
+  dirección `contacto.html?motivo=<clave>#formulario` (así lo hacen "Ser voluntario" y "Hacer una alianza").
+- **ubicacion**: el texto bajo "Dónde trabajamos" (hoy "Puebla, México").
+- **mapa_url**: la dirección para **incrustar** el mapa. Mientras esté vacía (`""`) se muestra un
+  recuadro que dice "Mapa de ubicaciones". Opciones:
+  - *Google Maps* (una sola ubicación): en Google Maps → Compartir → **Insertar un mapa** → copia
+    solo la dirección que aparece dentro de `src="..."`.
+  - *Google My Maps* (varias ubicaciones con pines): crea el mapa en mymaps.google.com, hazlo público
+    y usa **Insertar en mi sitio**; copia la dirección de `src="..."`.
+
+Después de editar, corre `python3 herramientas/menu.py`.
+
+### Fondo de video
+
+`img/contacto/fondo-contacto.mp4` (12 s, 720p, unos 4.6 MB) y su imagen fija
+`img/contacto/fondo-contacto.jpg`. El video solo se reproduce en pantallas grandes; en celular, con
+"ahorro de datos" o con "reducir movimiento" se muestra la imagen.
+
+### Envío del formulario
+
+El formulario envía los mensajes con `api/contacto.php` a la dirección de **correo** de este archivo.
+Ese archivo solo funciona una vez publicado en el hosting de Hostinger (PHP). En la vista previa
+local, o si el envío falla, se abre la aplicación de correo de la persona con el mensaje listo.
+Al publicar conviene crear en Hostinger el buzón `no-responder@capdes.org` (es el remitente de los
+avisos) y probar el formulario una vez.

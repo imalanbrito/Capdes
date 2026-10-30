@@ -1,11 +1,45 @@
 {
-  "_instrucciones": "Datos de contacto y redes del pie de página (todas las páginas) y de los íconos de redes del menú. Ver datos/COMO-EDITAR-CONTENIDO.md.",
+  "_instrucciones": "Datos de contacto: pie de página (todas las páginas), íconos de redes del menú y página de Contacto. Ver datos/COMO-EDITAR-CONTENIDO.md.",
   "nombre_completo": "Centro de Actividades y Apoyos para el Desarrollo y Bienestar Social, A.C.",
   "telefono": "+52 221 579 2406",
   "whatsapp": "",
   "correo": "contacto@capdes.org",
   "redes": [
-    { "red": "facebook", "enlace": "https://www.facebook.com/capdes.ac" },
-    { "red": "instagram", "enlace": "https://www.instagram.com/capdes.ac" }
+    {
+      "red": "facebook",
+      "enlace": "https://www.facebook.com/capdes.ac"
+    },
+    {
+      "red": "instagram",
+      "enlace": "https://www.instagram.com/capdes.ac"
+    }
+  ],
+  "ubicacion": "Puebla, México",
+  "mapa_url": "",
+  "motivos": [
+    {
+      "clave": "comunidad",
+      "texto": "Llevar CAPDES a mi comunidad"
+    },
+    {
+      "clave": "voluntariado",
+      "texto": "Voluntariado o servicio social"
+    },
+    {
+      "clave": "alianza",
+      "texto": "Alianza o empresa"
+    },
+    {
+      "clave": "proyecto",
+      "texto": "Apoyar o apadrinar un proyecto"
+    },
+    {
+      "clave": "donativo",
+      "texto": "Donativos"
+    },
+    {
+      "clave": "otro",
+      "texto": "Otro"
+    }
   ]
 }

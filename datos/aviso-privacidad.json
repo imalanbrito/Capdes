@@ -1,0 +1,75 @@
+{
+  "_instrucciones": "Aviso de Privacidad (aviso-de-privacidad.html). BORRADOR basado en la Política de Protección de Datos Personales y Salvaguarda (CAPDES_AC/POLPDPYS-008/2025): debe revisarlo un abogado y completarse el responsable y su domicilio antes de publicarse. Mientras \"publicar\" sea false, la página no se genera y no hay enlaces a ella. Cuando esté aprobado, cambia \"publicar\" a true y \"en_revision\" a false y corre: python3 herramientas/menu.py",
+  "publicar": false,
+  "en_revision": true,
+  "actualizado": "2026-10-29",
+  "secciones": [
+    {
+      "titulo": "Responsable del tratamiento de tus datos",
+      "parrafos": [
+        "CAPDES, A.C. ([razón social completa por confirmar]), con domicilio en [domicilio por confirmar], es responsable del tratamiento de los datos personales que nos proporciones a través de este sitio web, en términos de la legislación mexicana aplicable en materia de protección de datos personales en posesión de los particulares.",
+        "Para cualquier asunto relacionado con tus datos personales puedes escribirnos a contacto@capdes.org."
+      ]
+    },
+    {
+      "titulo": "Datos personales que recabamos",
+      "parrafos": [
+        "A través de este sitio podemos recabar los siguientes datos:"
+      ],
+      "lista": [
+        "Correo electrónico, cuando te suscribes para recibir noticias de nuestras jornadas, talleres y eventos.",
+        "Nombre, apellidos, correo electrónico y el contenido de tu mensaje, cuando nos escribes por el formulario de contacto o por correo electrónico.",
+        "Información técnica de navegación (como la dirección IP), que recibe el servicio externo que usamos para contar las visitas al sitio."
+      ],
+      "parrafos_finales": [
+        "No solicitamos datos personales sensibles a través de este sitio web. Los donativos se realizan directamente en las plataformas de PayPal y GoFundMe, que tratan tus datos de pago conforme a sus propios avisos de privacidad; CAPDES no recibe ni almacena los datos de tu tarjeta."
+      ]
+    },
+    {
+      "titulo": "Para qué usamos tus datos",
+      "parrafos": [
+        "Usaremos tus datos personales para las siguientes finalidades, que son necesarias para atender tu solicitud:"
+      ],
+      "lista": [
+        "Responder tus mensajes, dudas y solicitudes de información.",
+        "Dar seguimiento a tu interés en participar como persona voluntaria, prestadora de servicio social o aliada.",
+        "Cumplir con las obligaciones legales aplicables a la Asociación."
+      ],
+      "parrafos_finales": [
+        "De manera adicional, si te suscribes, usaremos tu correo para enviarte información sobre nuestras jornadas, talleres, eventos y resultados. Puedes pedirnos en cualquier momento que dejemos de enviártela escribiendo a contacto@capdes.org.",
+        "Queda prohibido el uso de tus datos personales para fines distintos a los aquí señalados."
+      ]
+    },
+    {
+      "titulo": "Transferencia de datos",
+      "parrafos": [
+        "CAPDES, A.C. no vende, renta ni comparte tus datos personales con terceros, salvo cuando sea necesario para cumplir una obligación legal o un requerimiento de una autoridad competente."
+      ]
+    },
+    {
+      "titulo": "Tus derechos (ARCO) y la revocación de tu consentimiento",
+      "parrafos": [
+        "Tienes derecho a conocer qué datos personales tenemos de ti y para qué los usamos (Acceso); a pedir que los corrijamos si están desactualizados o son inexactos (Rectificación); a solicitar que los eliminemos de nuestros registros (Cancelación), y a oponerte a su uso para fines específicos (Oposición). También puedes revocar el consentimiento que nos hayas otorgado.",
+        "Para ejercer cualquiera de estos derechos, envía tu solicitud a contacto@capdes.org indicando tu nombre, un medio para responderte, el derecho que deseas ejercer y una descripción clara de los datos involucrados. Te responderemos en los plazos que establece la ley."
+      ]
+    },
+    {
+      "titulo": "Cómo protegemos tus datos",
+      "parrafos": [
+        "Conforme a nuestra Política de Protección de Datos Personales y Salvaguarda, aplicamos medidas administrativas (accesos restringidos, acuerdos de confidencialidad y capacitación periódica), técnicas (protección de archivos digitales, contraseñas seguras y respaldos) y físicas (resguardo de expedientes y control de acceso a oficinas)."
+      ]
+    },
+    {
+      "titulo": "Niñas, niños y adolescentes",
+      "parrafos": [
+        "Este sitio no está dirigido a menores de edad. Cuando CAPDES, A.C. trate datos de niñas, niños o adolescentes en el marco de sus programas, el consentimiento deberá ser otorgado por su madre, padre o tutor legal."
+      ]
+    },
+    {
+      "titulo": "Cambios a este aviso",
+      "parrafos": [
+        "Este aviso de privacidad puede modificarse para atender cambios legales o en nuestras prácticas. Cualquier modificación se publicará en esta página, con la fecha de su última actualización."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "_instrucciones": "Página de Marco institucional. Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: python3 herramientas/menu.py",
+  "actualizado": "2026-10-29",
+  "intro": [
+    "CAPDES A.C. pone a disposición del público su marco normativo, estratégico y operativo como parte de su compromiso con la transparencia, la rendición de cuentas y la correcta gestión de los recursos destinados a acciones de asistencia social y de desarrollo social.",
+    "Estos documentos reflejan nuestros principios éticos, nuestra estructura organizacional y los lineamientos que guían el trabajo con comunidades, aliados y donantes."
+  ],
+  "carpeta": "documentos/carpeta-institucional-capdes.pdf",
+  "mostrar_ficha": false,
+  "ficha": [
+    {
+      "campo": "Razón social",
+      "valor": ""
+    },
+    {
+      "campo": "Nombre corto",
+      "valor": "CAPDES, A.C."
+    },
+    {
+      "campo": "RFC",
+      "valor": ""
+    },
+    {
+      "campo": "CLUNI (Registro Federal de las OSC)",
+      "valor": ""
+    },
+    {
+      "campo": "Donataria autorizada",
+      "valor": ""
+    },
+    {
+      "campo": "Fecha de constitución",
+      "valor": ""
+    },
+    {
+      "campo": "Domicilio",
+      "valor": ""
+    },
+    {
+      "campo": "Correo institucional",
+      "valor": "contacto@capdes.org"
+    }
+  ],
+  "grupos": [
+    {
+      "clave": "identidad",
+      "titulo": "Identidad institucional",
+      "documentos": [
+        {
+          "titulo": "Estructura orgánica y organigrama",
+          "clave": "CAPDES_AC/EO-001/2025",
+          "vigente_desde": "",
+          "descripcion": "Presenta la estructura de gobernanza y operación de CAPDES A.C., así como las funciones de sus áreas y equipos de trabajo.",
+          "archivo": "documentos/eo-001-estructura-organica.pdf"
+        },
+        {
+          "titulo": "Resumen narrativo institucional",
+          "clave": "",
+          "vigente_desde": "2025-06-30",
+          "descripcion": "Documento narrativo que describe la misión, visión, valores y razón de ser de CAPDES A.C.",
+          "archivo": "documentos/sintesis-institucional.pdf"
+        }
+      ]
+    },
+    {
+      "clave": "planeacion",
+      "titulo": "Planeación estratégica",
+      "documentos": [
+        {
+          "titulo": "Plan Estratégico Institucional 2025–2030",
+          "clave": "CAPDES_AC/PLEI-006/2025",
+          "vigente_desde": "",
+          "descripcion": "Establece las prioridades, objetivos y líneas de acción de la organización a mediano y largo plazo, alineadas a los Objetivos de Desarrollo Sostenible.",
+          "archivo": "documentos/plei-006-plan-estrategico-2025-2030.pdf"
+        },
+        {
+          "titulo": "Plan de Recaudación de Fondos",
+          "clave": "CAPDES_AC/PLRF-005/2025",
+          "vigente_desde": "",
+          "descripcion": "Define la estrategia para asegurar la sostenibilidad financiera de CAPDES A.C. mediante alianzas, donaciones y financiamiento institucional.",
+          "archivo": "documentos/plrf-005-plan-de-recaudacion.pdf"
+        }
+      ]
+    },
+    {
+      "clave": "marco-normativo",
+      "titulo": "Marco normativo y políticas internas",
+      "documentos": [
+        {
+          "titulo": "Código de Ética y Conducta",
+          "clave": "CAPDES_AC/CEYC-002/2025",
+          "vigente_desde": "",
+          "descripcion": "Establece los principios, valores y normas de comportamiento que guían a todas las personas vinculadas a CAPDES A.C.",
+          "archivo": "documentos/ceyc-002-codigo-de-etica-y-conducta.pdf"
+        },
+        {
+          "titulo": "Política de Transparencia y Rendición de Cuentas",
+          "clave": "CAPDES_AC/POLTYRC-009/2025",
+          "vigente_desde": "2025-06-30",
+          "descripcion": "Define los mecanismos mediante los cuales CAPDES A.C. informa sobre el uso de recursos y los resultados de sus proyectos.",
+          "archivo": "documentos/politica-de-transparencia.pdf"
+        },
+        {
+          "titulo": "Política de Administración Financiera",
+          "clave": "CAPDES_AC/POLAF-007/2025",
+          "vigente_desde": "",
+          "descripcion": "Regula la gestión, el control y el uso responsable de los recursos financieros de la organización.",
+          "archivo": "documentos/polaf-007-politica-administracion-financiera.pdf"
+        },
+        {
+          "titulo": "Política de Protección de Datos Personales y Salvaguarda",
+          "clave": "CAPDES_AC/POLPDPYS-008/2025",
+          "vigente_desde": "2025-06-30",
+          "descripcion": "Establece las medidas para proteger la información personal de personas beneficiarias, aliadas y colaboradoras, así como su integridad.",
+          "archivo": "documentos/polpdpys-008-politica-proteccion-de-datos.pdf"
+        },
+        {
+          "titulo": "Manual de Recursos Humanos",
+          "clave": "CAPDES_AC/MRH-004/2025",
+          "vigente_desde": "",
+          "descripcion": "Define los lineamientos para la gestión del personal, el voluntariado y las personas colaboradoras de la organización.",
+          "archivo": "documentos/mrh-004-manual-recursos-humanos.pdf"
+        },
+        {
+          "titulo": "Manual de Operación de Proyectos",
+          "clave": "CAPDES_AC/MOP-003/2025",
+          "vigente_desde": "",
+          "descripcion": "Establece el modelo metodológico para el diseño, la ejecución, el seguimiento y la evaluación de los proyectos sociales de CAPDES A.C.",
+          "archivo": "documentos/mop-003-manual-operacion-de-proyectos.pdf"
+        }
+      ]
+    },
+    {
+      "clave": "informes",
+      "titulo": "Informes y rendición de cuentas",
+      "documentos": [
+        {
+          "titulo": "Informe anual de actividades",
+          "clave": "",
+          "vigente_desde": "",
+          "descripcion": "Presenta los resultados, los proyectos ejecutados y las personas beneficiarias atendidas durante el año.",
+          "archivo": ""
+        }
+      ]
+    }
+  ],
+  "contacto": "CAPDES A.C. trabaja bajo principios de legalidad, transparencia y corresponsabilidad social. Para solicitudes de información institucional, observaciones sobre el uso de recursos o para establecer una alianza, escríbenos a:"
+}
