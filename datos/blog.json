@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Artículos del blog. Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: python3 herramientas/menu.py",
+  "_instrucciones": "Artículos del blog. Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: php herramientas/generar.php",
   "categorias": [
     "Noticias",
     "Eventos",

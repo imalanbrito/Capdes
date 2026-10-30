@@ -425,7 +425,7 @@
   }
 }
 
-/* ───────────── Menú principal (HTML generado por herramientas/menu.py) ─────────────
+/* ───────────── Menú principal (HTML generado por herramientas/generar.php) ─────────────
 
    Dos estados que alterna js/menu.js:
    - completo (arriba de la página): logo grande y todas las pestañas;
@@ -1042,7 +1042,7 @@ html {
   }
 }
 
-/* ───────────── Pie · contador de visitas (HTML generado por herramientas/menu.py) ───────────── */
+/* ───────────── Pie · contador de visitas (HTML generado por herramientas/generar.php) ───────────── */
 
 .contador {
   display: inline-flex;
@@ -2495,7 +2495,7 @@ html {
   }
 }
 
-/* ───────────── Pie de página (todas las páginas; HTML generado por herramientas/menu.py) ───────────── */
+/* ───────────── Pie de página (todas las páginas; HTML generado por herramientas/generar.php) ───────────── */
 
 .pie {
   position: relative;
@@ -2798,7 +2798,7 @@ html {
   }
 }
 
-/* ───────────── Blog · listado (blog.html; HTML generado por herramientas/menu.py) ───────────── */
+/* ───────────── Blog · listado (blog.html; HTML generado por herramientas/generar.php) ───────────── */
 
 .blog {
   padding: 88px 24px 104px;
@@ -3411,7 +3411,7 @@ html {
   }
 }
 
-/* ───────────── Programas (programas.html; HTML generado por herramientas/menu.py) ───────────── */
+/* ───────────── Programas (programas.html; HTML generado por herramientas/generar.php) ───────────── */
 
 /* Portada de página interna: misma estética que la del inicio, más baja. */
 .portada--pagina {
@@ -4033,7 +4033,7 @@ html {
   }
 }
 
-/* ───────────── Marco institucional (HTML generado por herramientas/menu.py) ─────────────
+/* ───────────── Marco institucional (HTML generado por herramientas/generar.php) ─────────────
    Diseño sobrio, de documento oficial: fondo claro, sin degradados ni animaciones. */
 
 .marco {
@@ -4565,7 +4565,7 @@ html {
   color: #d9dcf2;
 }
 
-/* ───────────── Contacto (contacto.html; HTML generado por herramientas/menu.py) ───────────── */
+/* ───────────── Contacto (contacto.html; HTML generado por herramientas/generar.php) ───────────── */
 
 .contacto {
   position: relative;
@@ -4991,5 +4991,253 @@ html {
   .canal,
   .formulario__enviar {
     transition: none;
+  }
+}
+
+/* ───────────── Quiénes somos (quienes-somos.html; HTML generado por herramientas/generar.php) ───────────── */
+
+#acerca,
+#mision-vision-valores {
+  scroll-margin-top: var(--menu-alto-compacto);
+}
+
+/* El mismo degradado azul–morado de la página original. */
+.quienes {
+  padding: 72px 24px;
+  color: #ffffff;
+  background: radial-gradient(circle at center, #1a9de2, #4b46ad);
+}
+
+.principios {
+  padding-top: 24px;
+  padding-bottom: 96px;
+}
+
+.quienes__contenido {
+  max-width: 1224px;
+  margin: 0 auto;
+}
+
+.acerca__titulo {
+  margin: 0 0 32px;
+  font-family: Outfit, Poppins, system-ui, sans-serif;
+  font-size: clamp(36px, 4.4vw, 52px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #ffffff;
+}
+
+.acerca__columnas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 48px;
+}
+
+.acerca__subtitulo {
+  margin: 0 0 12px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.acerca__columnas p {
+  margin: 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #eef1fb;
+}
+
+.acerca__foto {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 48px;
+  border-radius: 20px;
+}
+
+.principios__encabezado {
+  max-width: 820px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.principios__antetitulo {
+  margin: 0 0 10px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.principios__titulo {
+  margin: 0;
+  font-family: Outfit, Poppins, system-ui, sans-serif;
+  font-size: clamp(30px, 3.6vw, 44px);
+  font-weight: 600;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.principios__intro {
+  margin: 14px 0 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #eef1fb;
+}
+
+.principios__rejilla {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.principio,
+.valor {
+  padding: 28px;
+  color: #1a1a1a;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.principio__icono,
+.valor__icono {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  color: #2d3a88;
+  background: #e8eaf6;
+  border-radius: 12px;
+}
+
+.valor__icono {
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+.principio__etiqueta {
+  margin: 16px 0 6px;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+}
+
+.principio__titulo {
+  margin: 0;
+  font-family: Outfit, Poppins, system-ui, sans-serif;
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.principio__texto,
+.valor__texto {
+  margin: 12px 0 0;
+  font-family: Poppins, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #3a3a3a;
+}
+
+.principio__foto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin-top: 24px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.valores {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.valor__titulo {
+  margin: 14px 0 0;
+  font-family: Outfit, Poppins, system-ui, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1a1a1a;
+}
+
+/* Al pasar el mouse las tarjetas se elevan un poco, como en la página original. */
+.principios .principio.principio.transition.transition--slide,
+.principios .valor.valor.transition.transition--slide {
+  transition:
+    opacity 0.65s ease var(--user-animation-delay, 0.1s),
+    transform 0.65s ease var(--user-animation-delay, 0.1s),
+    translate 0.4s var(--suave),
+    box-shadow 0.4s var(--suave);
+}
+
+@media (hover: hover) {
+  .principios .principio:hover,
+  .principios .valor:hover {
+    translate: 0 -6px;
+    box-shadow: 0 18px 32px -16px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .acerca__columnas,
+  .principios__rejilla,
+  .valores {
+    grid-template-columns: 1fr;
+  }
+
+  .acerca__columnas {
+    gap: 28px;
+  }
+
+  .valores {
+    gap: 16px;
+    margin-top: 16px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .quienes {
+    padding: 48px 16px;
+  }
+
+  .principios {
+    padding-top: 16px;
+    padding-bottom: 64px;
+  }
+
+  .acerca__foto {
+    margin-top: 32px;
+  }
+
+  .principio,
+  .valor {
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .principios .principio.principio.transition.transition--slide,
+  .principios .valor.valor.transition.transition--slide {
+    transition: none;
+  }
+
+  .principios .principio:hover,
+  .principios .valor:hover {
+    translate: none;
   }
 }

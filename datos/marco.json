@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Página de Marco institucional. Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: python3 herramientas/menu.py",
+  "_instrucciones": "Página de Marco institucional. Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: php herramientas/generar.php",
   "actualizado": "2026-10-29",
   "intro": [
     "CAPDES A.C. pone a disposición del público su marco normativo, estratégico y operativo como parte de su compromiso con la transparencia, la rendición de cuentas y la correcta gestión de los recursos destinados a acciones de asistencia social y de desarrollo social.",

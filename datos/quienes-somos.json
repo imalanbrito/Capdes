@@ -1,0 +1,37 @@
+{
+  "_instrucciones": "Página Quiénes somos (quienes-somos.html). Ver datos/COMO-EDITAR-CONTENIDO.md. Después de editar, corre: php herramientas/generar.php",
+  "acerca": {
+    "quienes_somos": "Organización de la sociedad civil mexicana comprometida con la transformación social de personas, familias y comunidades que viven en condiciones de vulnerabilidad, exclusión y desigualdad.",
+    "que_hacemos": "Diseñamos e implementamos programas de desarrollo social, económico y humano que buscan generar oportunidades sostenibles y mejorar la calidad de vida de las personas.",
+    "imagen": "img/quienes/acerca.jpg",
+    "descripcion_imagen": "Equipo de CAPDES, A.C. con personas de la comunidad durante unas Jornadas Comunitarias de Servicios"
+  },
+  "principios_intro": "Guiamos nuestras acciones para transformar realidades, fortalecer capacidades comunitarias y construir un desarrollo social justo, incluyente y sostenible en México.",
+  "mision": {
+    "texto": "Reducir las desigualdades sociales a través de acciones que promuevan los derechos humanos, la igualdad y la inclusión, impulsando un desarrollo sostenible y justo para todas y todos.",
+    "imagen": "img/quienes/mision.jpg",
+    "descripcion_imagen": "Mujeres de la comunidad caminan por una calle adornada con papel picado durante una actividad de CAPDES"
+  },
+  "vision": {
+    "texto": "Ser un referente de impacto social, creando soluciones innovadoras y sostenibles que empoderen a individuos, familias y comunidades para alcanzar su pleno potencial.",
+    "imagen": "img/quienes/vision.jpg",
+    "descripcion_imagen": "Integrantes de CAPDES conversan con familias de la comunidad junto a una lona de la asociación"
+  },
+  "valores": [
+    {
+      "icono": "corazon",
+      "titulo": "Igualdad e Inclusión",
+      "texto": "Defendemos la dignidad de cada persona, asegurando que los grupos vulnerables accedan a oportunidades reales de desarrollo integral."
+    },
+    {
+      "icono": "escudo",
+      "titulo": "Transparencia y Ética",
+      "texto": "Operamos con absoluta claridad, responsabilidad y entrega en la gestión de los recursos destinados al beneficio de la sociedad."
+    },
+    {
+      "icono": "personas",
+      "titulo": "Empoderamiento",
+      "texto": "Fomentamos la autogestión y el liderazgo comunitario para que las familias sean agentes activos de su propia transformación."
+    }
+  ]
+}

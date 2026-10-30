@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Página de Programas. Ver datos/COMO-EDITAR-CONTENIDO.md. Las jornadas (galería) se ven al guardar; los cambios a programas, tipos u ODS necesitan correr: python3 herramientas/menu.py",
+  "_instrucciones": "Página de Programas. Ver datos/COMO-EDITAR-CONTENIDO.md. Las jornadas (galería) se ven al guardar; los cambios a programas, tipos u ODS necesitan correr: php herramientas/generar.php",
   "intro": "En CAPDES A.C. implementamos modelos comunitarios sustentables enfocados en la perspectiva de género, soberanía alimentaria, salud y equidad social, alineados con la Agenda 2030.",
   "imagen_portada": "img/galeria/06-taller-germinacion-huertos.jpg",
   "modelo": "Implementamos modelos de intervención integral que combinan diagnóstico comunitario participativo, capacitación, entrega estratégica de apoyos, acompañamiento técnico y evaluación constante.",

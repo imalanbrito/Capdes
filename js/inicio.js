@@ -56,7 +56,7 @@
   }
 
   // ───── Contenido editable: "Nuestro impacto" y eventos ─────
-  // La página ya trae este contenido (herramientas/menu.py), pero aquí se vuelve
+  // La página ya trae este contenido (herramientas/generar.php), pero aquí se vuelve
   // a leer de datos/impacto.json y datos/eventos.json para que los cambios hechos
   // desde el panel se vean sin regenerar el HTML. Si la lectura falla, se queda lo que trae la página.
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio',
@@ -267,7 +267,7 @@
 
   // Las fotos salen de datos/jornadas.json: de su lista "jornadas" o, si "fuente"
   // es "drive", de una carpeta pública de Google Drive. La página ya trae las
-  // diapositivas del archivo (herramientas/menu.py); si la lectura falla, se quedan esas.
+  // diapositivas del archivo (herramientas/generar.php); si la lectura falla, se quedan esas.
   cargarJornadas()
     .then(function (jornadas) {
       if (jornadas && jornadas.length) pintarSlides(jornadas);

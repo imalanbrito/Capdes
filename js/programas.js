@@ -1,5 +1,5 @@
 // Página de Programas: filtro por tipo de programa, galería de jornadas con filtro
-// por programa y visor de fotos. El HTML lo genera herramientas/menu.py; la galería
+// por programa y visor de fotos. El HTML lo genera herramientas/generar.php; la galería
 // se vuelve a armar desde datos/programas.json para que las fotos que se agreguen
 // desde el panel aparezcan sin regenerar la página.
 (function () {

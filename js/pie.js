@@ -1,4 +1,4 @@
-// Pie de página (todas las páginas). El HTML lo genera herramientas/menu.py; aquí se
+// Pie de página (todas las páginas). El HTML lo genera herramientas/generar.php; aquí se
 // vuelven a leer los datos de contacto de datos/contacto.json para que los cambios
 // hechos desde el panel se vean sin regenerar el HTML, y se maneja el formulario.
 (function () {

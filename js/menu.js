@@ -1,5 +1,5 @@
 // Menú principal: header completo arriba de la página y compacto al hacer scroll,
-// submenús, panel de la hamburguesa y teclado. El HTML lo genera herramientas/menu.py.
+// submenús, panel de la hamburguesa y teclado. El HTML lo genera herramientas/generar.php.
 (function () {
   var menu = document.querySelector('[data-menu]');
   if (!menu) return;

@@ -1,5 +1,5 @@
 {
-  "_instrucciones": "Aviso de Privacidad (aviso-de-privacidad.html). BORRADOR basado en la Política de Protección de Datos Personales y Salvaguarda (CAPDES_AC/POLPDPYS-008/2025): debe revisarlo un abogado y completarse el responsable y su domicilio antes de publicarse. Mientras \"publicar\" sea false, la página no se genera y no hay enlaces a ella. Cuando esté aprobado, cambia \"publicar\" a true y \"en_revision\" a false y corre: python3 herramientas/menu.py",
+  "_instrucciones": "Aviso de Privacidad (aviso-de-privacidad.html). BORRADOR basado en la Política de Protección de Datos Personales y Salvaguarda (CAPDES_AC/POLPDPYS-008/2025): debe revisarlo un abogado y completarse el responsable y su domicilio antes de publicarse. Mientras \"publicar\" sea false, la página no se genera y no hay enlaces a ella. Cuando esté aprobado, cambia \"publicar\" a true y \"en_revision\" a false y corre: php herramientas/generar.php",
   "publicar": false,
   "en_revision": true,
   "actualizado": "2026-10-29",

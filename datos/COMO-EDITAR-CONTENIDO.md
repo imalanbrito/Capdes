@@ -15,6 +15,7 @@ se vea.
 | Contacto y redes (pie de página, menú y página de Contacto) | `datos/contacto.json` | `img/contacto/` |
 | Blog: listado y una página por artículo | `datos/blog.json` | `img/blog/` |
 | Programas: programas, galería de jornadas y ODS | `datos/programas.json` | `img/programas/`, `img/galeria/` |
+| Quiénes somos: acerca de, misión, visión y valores | `datos/quienes-somos.json` | `img/quienes/` |
 | Marco institucional: ficha y documentos | `datos/marco.json` | `documentos/` (PDF) |
 | Aviso de privacidad | `datos/aviso-privacidad.json` | — |
 
@@ -32,8 +33,10 @@ se vea.
   siguiente por una coma, y después del último no lleva coma.
 - Para **quitar** un elemento, borra su bloque (y la coma que lo separa). Para
   **cambiar el orden**, mueve los bloques.
-- Después de editar, corre `python3 herramientas/menu.py`: integra el contenido nuevo
+- Después de editar, corre `php herramientas/generar.php`: integra el contenido nuevo
   en el HTML de la página (así lo ven los buscadores) y avisa si algo quedó mal escrito.
+  Si hay un error, no cambia ninguna página. En una Mac, PHP se instala una sola vez con
+  `brew install php`. En el servidor no hace falta: el panel lo corre al publicar.
 
 ## Carrusel de jornadas — `datos/jornadas.json`
 
@@ -207,11 +210,11 @@ Cada artículo tiene su propia página (`blog/<slug>.html`) y aparece en el list
 - **imagen**: foto horizontal, de unos 1200–1600 px de ancho.
 
 **Importante:** después de agregar, editar o quitar artículos hay que correr
-`python3 herramientas/menu.py`. Ese comando crea las páginas nuevas, actualiza el listado y
+`php herramientas/generar.php`. Ese comando crea las páginas nuevas, actualiza el listado y
 borra las páginas de los artículos que ya no están en el archivo. (Cuando exista el panel de
 administrador, esto lo hará el botón "Publicar".)
 
-Al cambiar la dirección del sitio, ajusta `SITIO` en `herramientas/menu.py`: se usa en los
+Al cambiar la dirección del sitio, ajusta `SITIO` en `herramientas/generar.php`: se usa en los
 enlaces para compartir y en las vistas previas de redes sociales.
 
 ## Programas — `datos/programas.json`
@@ -251,7 +254,19 @@ Para agregar una jornada, sube la foto a `img/galeria/` y agrega un bloque en `"
   de los encabezados de la página.
 
 **Importante:** los cambios a programas, tipos, ODS o textos necesitan correr
-`python3 herramientas/menu.py`. Las jornadas de la galería no lo necesitan.
+`php herramientas/generar.php`. Las jornadas de la galería no lo necesitan.
+
+## Quiénes somos — `datos/quienes-somos.json`
+
+Esta página se arma con `php herramientas/generar.php`: después de editar, córrelo.
+
+- **acerca**: los textos de "¿Quiénes somos?" y "¿Qué hacemos?", y la foto de la derecha
+  (`imagen` + `descripcion_imagen`, que lee quien usa lector de pantalla).
+  El nombre completo de la asociación se toma de `nombre_completo` en `datos/contacto.json`.
+- **principios_intro**: el texto bajo el título "Misión, visión y valores".
+- **mision** y **vision**: `texto`, `imagen` y `descripcion_imagen`. Las fotos se recortan solas.
+- **valores**: una tarjeta por valor, con `titulo`, `texto` e `icono`
+  (`corazon`, `escudo`, `personas`, `diana` u `ojo`). Puedes agregar o quitar valores.
 
 ## Marco institucional — `datos/marco.json`
 
@@ -280,7 +295,7 @@ Para publicarlo:
 1. Completa la razón social y el domicilio del responsable (donde dice "[por confirmar]").
 2. Aplica los cambios que indique la revisión legal.
 3. Cambia `"publicar"` a `true` y `"en_revision"` a `false`, actualiza `"actualizado"` y corre
-   `python3 herramientas/menu.py`. Se crea la página y aparecen sus enlaces en el pie de página,
+   `php herramientas/generar.php`. Se crea la página y aparecen sus enlaces en el pie de página,
    bajo el formulario de suscripción y en el Marco institucional.
 
 Si el sitio empieza a recabar otros datos (por ejemplo, un formulario de voluntariado con
@@ -301,7 +316,7 @@ Además de los datos de contacto y redes (ver arriba), este archivo controla:
   - *Google My Maps* (varias ubicaciones con pines): crea el mapa en mymaps.google.com, hazlo público
     y usa **Insertar en mi sitio**; copia la dirección de `src="..."`.
 
-Después de editar, corre `python3 herramientas/menu.py`.
+Después de editar, corre `php herramientas/generar.php`.
 
 ### Fondo de video
 

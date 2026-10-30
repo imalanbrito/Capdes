@@ -1,5 +1,5 @@
 // Contador de visitas del pie de página, con el servicio gratuito Abacus
-// (https://abacus.jasoncameron.dev). El HTML lo genera herramientas/menu.py.
+// (https://abacus.jasoncameron.dev). El HTML lo genera herramientas/generar.php.
 //
 // - Cuenta una visita por sesión del navegador (no una por cada página vista).
 // - Solo suma en el dominio real; en local o en vistas previas solo lee el número.
